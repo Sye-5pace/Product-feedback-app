@@ -19,7 +19,7 @@
         <div class="rounded-[0.625rem] bg-white h-[11.125rem] px-6 pt-[1.1875rem] flex flex-col gap-y-6">
             <div class="flex gap-[6.1875rem]">
                 <h2 class="font-bold text-[1.125rem] tracking-[-0.015625rem] text-[#3a4374]" >Roadmap</h2> 
-                <span class="underline text-[#4661e6] hover:text-[#8397f8] font-semibold text-[0.8125rem] cursor-pointer">View</span>
+                <router-link class="underline text-[#4661e6] hover:text-[#8397f8] font-semibold text-[0.8125rem] cursor-pointer"  to='/roadmap'>View</router-link>
             </div>
             <div> 
                 <div class= "flex flex-col gap-2 children:text-[#647196] children:font-normal"> 
@@ -48,5 +48,5 @@
 </template>
 
 <script setup>
-    
+    import { RouterLink } from 'vue-router'
 </script>
