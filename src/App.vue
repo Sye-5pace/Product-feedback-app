@@ -1,6 +1,6 @@
 <template>
   <main class="flex items-center w-full min-h-screen p-0 m-0 border-box bg-[#F7F8FD] font-jost">
-    <div class="w-[69.375rem]  mx-[10.3125rem] flex children:border gap-8">
+    <div class="w-[69.375rem]  mx-[10.3125rem] flex children:border gap-4">
       <SideToolbar/>
       
       <router-view></router-view>
