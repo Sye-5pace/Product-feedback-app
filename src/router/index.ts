@@ -1,4 +1,3 @@
-import { CreateFeedback } from '@/views/CreateFeedback.vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import  RoadmapBoard from '../views/RoadmapBoard.vue'
 import  SuggestionAll from '../views/SuggestionAll.vue'

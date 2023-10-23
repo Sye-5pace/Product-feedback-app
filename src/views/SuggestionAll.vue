@@ -10,13 +10,14 @@
               <h5 class="text-[#F2F4FE] text-[0.875rem] font-normal">Sort by :</h5>
             </div>
           </div>
-          <router-link to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
+          <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
         </header>
     </section>
+    
 </template>
 
 <script setup>
-  import RouterLink from 'vue-router'
+  import { RouterLink } from 'vue-router'
   // import SideToolbar from '../components/SideToolbar.vue'
   // import FeedbackBoard from '../components/FeedbackBoard.vue'
 </script>
