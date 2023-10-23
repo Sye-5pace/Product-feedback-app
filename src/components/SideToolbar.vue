@@ -27,19 +27,19 @@
                         <div class="flex gap-4 items-center">                  
                             <span class="w-2 h-2 rounded-full bg-[#F49F85]"></span> <p>Planned</p>
                         </div>
-                        <span class="font-bold self-end">2</span>
+                        <span class="font-bold self-end">{{ planned.length }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-4 items-center">
                             <span class="w-2 h-2 rounded-full bg-[#AD1FEA]"></span> <p>In-progress</p> 
                         </div>
-                        <span class="font-bold self-end">3</span>
+                        <span class="font-bold self-end">{{ progress.length }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-4 items-center">
                             <span class="w-2 h-2 rounded-full bg-[#62bcfa]"></span> <p>Live</p> 
                         </div>
-                        <span class="font-bold self-end">1</span>
+                        <span class="font-bold self-end">{{ live.length }}</span>
                     </div>
                 </div>
             </div>
@@ -47,6 +47,20 @@
     </section>
 </template>
 
-<script setup>
-    import { RouterLink } from 'vue-router'
+<script setup lang="ts">
+    import { RouterLink } from 'vue-router';
+    import { reactive } from 'vue'
+    import data from '../assets/data.json'
+    import type ProductsInfo from '../Interface'
+    import type ProductReqList from '../Interface'
+
+    const productData: ProductsInfo = reactive(data.productRequests)
+    console.log(productData.length)
+    
+    const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
+    console.log(planned.length)
+    const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
+    console.log(progress.length)
+    const live: ProductReqList[] = productData.filter( data => data.status === 'live')
+    console.log(live.length)
 </script>
