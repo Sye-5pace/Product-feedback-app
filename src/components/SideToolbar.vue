@@ -49,18 +49,20 @@
 
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
-    import { reactive } from 'vue'
+    import { reactive,computed } from 'vue'
     import data from '../assets/data.json'
     import type ProductsInfo from '../Interface'
     import type ProductReqList from '../Interface'
 
     const productData: ProductsInfo = reactive(data.productRequests)
-    console.log(productData.length)
-    
+        
     const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
-    console.log(planned.length)
-    const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
-    console.log(progress.length)
     const live: ProductReqList[] = productData.filter( data => data.status === 'live')
-    console.log(live.length)
+    const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
+
+
+
+
+    
+    
 </script>
