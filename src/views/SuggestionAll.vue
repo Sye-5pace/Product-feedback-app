@@ -14,22 +14,23 @@
               <img :src="navDown" alt="nav-toggle" class="py-2" v-else/>
             </div>
             <div class="absolute  border top-[9.2375rem] justify-center flex flex-col  bg-white rounded-[0.625rem] children:h-[2.9375rem] w-[15.9375rem] h-[12.0625rem] shadow-lg" v-if="optionToggle">
-              <div  class=" border-b px-6 py-[0.75rem]"> 
+              <div @click="optionsUpdater('Most Upvotes')"  class=" border-b px-6 py-[0.75rem] flex justify-between"> 
                 <h3 class="text-[#647196] text-[1rem] hover:text-[#ad1fea]" >Most Upvotes</h3>
+                <img :src="tick" alt="option-tick" :class="voteOptions === 'Most Upvotes' ? 'block':'hidden'"/>
               </div>
-              <div  class=" border-b px-6 py-[0.75rem]"> 
+              <div @click="optionsUpdater('Least Upvotes')"  class=" border-b px-6 py-[0.75rem] flex justify-between"> 
                 <h3 class="text-[#647196] text-[1rem] hover:text-[#ad1fea]" >Least Upvotes</h3>
+                <img :src="tick" alt="option-tick" :class="voteOptions === 'Least Upvotes' ? 'block':'hidden'"/>
               </div>
-              <div  class=" border-b px-6 py-[0.75rem]"> 
+              <div @click="optionsUpdater('Most Comments')"  class=" border-b px-6 py-[0.75rem] flex justify-between"> 
                 <h3 class="text-[#647196] text-[1rem] hover:text-[#ad1fea]" >Most Comments</h3>
+                <img :src="tick" alt="option-tick" :class="voteOptions === 'Most Comments' ? 'block':'hidden'"/>
               </div>
-              <div  class="px-6 py-[0.75rem]"> 
+              <div @click="optionsUpdater('Least Comments')"  class="px-6 py-[0.75rem] flex justify-between"> 
                 <h3 class="text-[#647196] text-[1rem] hover:text-[#ad1fea]" >Least Comments</h3>
+                <img :src="tick" alt="option-tick" :class="voteOptions === 'Least Comments' ? 'block':'hidden'"/>
               </div>
             </div>
-          </div>
-          <div>
-            
           </div>
         </div>
         <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
@@ -79,15 +80,10 @@
   import EmptySugxn from '../assets/empty-suggestion.svg'
   import navDown from '../assets/white-nav-down.svg'
   import navUp from '../assets/white-nav-up.svg'
+  import tick from '../assets/option-tick.svg'
    
   const optionToggle = ref(false)
 
-  const options= [
-    {value: 'Most Upvotes',text: 'Most Upvotes'},
-    {value: 'Least Upvotes',text: 'Least Upvotes'},
-    {value: 'Most Comments',text: 'Most Comments'},
-    {value: 'Least Comments',text: 'Least Comments'}
-  ]
   
 
   // eslint-disable-next-line
