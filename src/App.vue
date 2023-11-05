@@ -1,6 +1,6 @@
 <template>
   <main class="flex items-center w-full min-h-screen p-0 m-0 border-box bg-[#F7F8FD] font-jost">
-    <div class="mt-[3.875rem] w-[69.375rem]  mx-[10.3125rem] flex gap-[1.875rem]">
+    <div class="my-[3.875rem] w-[69.375rem]  mx-[10.3125rem] flex gap-[1.875rem] ">
       <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory" :productData="productData"/>
       <router-view :selectedSuggestions="selectedSuggestions" :voteOptions="voteOptions" :optionsUpdater="optionsUpdater"></router-view>
     </div>
@@ -22,15 +22,40 @@
   const voteOptions = ref('Most Upvotes')
   
   const selectedSuggestions = computed(() => {
-      if (selectedCategory.value === 'all'){
-        return suggestions;
-      }else {
-        return suggestions.filter( item => {
-          return item.category === selectedCategory.value                
-        })
-      }
-  })
-
+    if (selectedCategory.value === 'all') {
+      return suggestions.slice().sort((a, b) => {
+        if (voteOptions.value === 'Most Upvotes') {
+          return b.upvotes - a.upvotes;
+        } else if (voteOptions.value === 'Least Upvotes') {
+          return a.upvotes - b.upvotes;
+        } else if (voteOptions.value === 'Most Comments') {
+          return (b.comments?.length || 0) - (a.comments?.length || 0);
+        } else if (voteOptions.value === 'Least Comments') {
+          return (a.comments?.length || 0) - (b.comments?.length || 0);
+        } else {
+          return 0; 
+        }
+      });
+    } else {
+      return suggestions
+        .filter((item) => item.category === selectedCategory.value)
+        .slice()
+        .sort((a, b) => {
+          if (voteOptions.value === 'Most Upvotes') {
+            return b.upvotes - a.upvotes;
+          } else if (voteOptions.value === 'Least Upvotes') {
+            return a.upvotes - b.upvotes;
+          } else if (voteOptions.value === 'Most Comments') {
+            return (b.comments?.length || 0) - (a.comments?.length || 0);
+          } else if (voteOptions.value === 'Least Comments') {
+            return (a.comments?.length || 0) - (b.comments?.length || 0);
+          } else {
+            return 0; // Default case
+          }
+        });
+    }
+  });
+ 
   const selectCategory = (category: string) => {
     selectedCategory.value = category
   }

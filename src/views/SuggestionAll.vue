@@ -1,10 +1,10 @@
 <template>
-  <section class="w-full  flex  flex-col gap-y-6 mb-[7.0625rem]">
+  <section class="w-full  flex  flex-col gap-y-6 ">
       <header class="bg-[#373f68] rounded-[0.625rem] h-[4.5rem] w-full flex items-center  pl-6 pr-4 justify-between ">
         <div class="flex items-center gap-[2.375rem] ">
           <div class="flex items-center gap-4">
             <img src="../assets/bulb-2.png" class=""/>
-            <span class="font-bold text-[1.125rem] text-[#fff]">{{ selectedSuggestions?.length }} Suggestions</span>
+            <span class="font-bold text-[1.125rem] text-[#fff]">{{ sortedSuggestions?.length }} Suggestions</span>
           </div>
           <div class="gap-1 text-[#F2F4FE] text-[0.875rem] flex items-center cursor-pointer">
             <h5 class="font-normal">Sort by : </h5>
@@ -56,7 +56,7 @@
           </div>
         </div>
       </main>
-      <section class="flex flex-col justify-center items-center gap-y-[2rem]" v-else>
+      <section class="flex flex-col justify-center items-center gap-y-[2rem] mt-[4.3rem]" v-else>
         <img :src="EmptySugxn" alt="empty-suggestion" class="w-[8.1025rem] h-[8.55rem]"/>
         <div class="flex flex-col gap-y-[3rem] w-[25.625rem] h-[11.8125rem] justify-center">
           <div class="flex flex-col gap-y-4">
@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { defineProps,ref  } from 'vue';
+  import { defineProps,ref,computed  } from 'vue';
   import type { PropType } from 'vue';
   import type ProductReqList from '../Interface'
   import EmptySugxn from '../assets/empty-suggestion.svg'
@@ -92,5 +92,21 @@
     voteOptions: String,
     optionsUpdater: Function
   })
-  console.log(selectedSuggestions)
+  
+  // const sortedSuggestions = computed(() => {
+  //   const suggestionsCopy = [...selectedSuggestions];
+  //   switch(voteOptions){
+  //     case 'Most Upvotes':
+  //       return suggestionsCopy.sort((a,b) => b.upvotes - a.upvotes);
+  //     case 'Least Upvotes':
+  //       return suggestionsCopy.sort((a,b) => a.upvotes - b.upvotes);
+  //     case 'Most Comments':
+  //       return suggestionsCopy.sort((a,b) => (b.comments?.length || 0) - (a.comments?.length || 0)) 
+  //     case 'Least Comments':
+  //       return suggestionsCopy.sort((a,b) => (a.comments?.length || 0) - (b.comments?.length || 0)) 
+  //     default:
+  //       return suggestionsCopy
+  //   }
+  // })
+  // console.log(selectedSuggestions)
 </script>
