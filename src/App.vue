@@ -21,6 +21,7 @@
   const selectedCategory = ref('all') ;
   const voteOptions = ref('Most Upvotes')
   
+  
   const selectedSuggestions = computed(() => {
     if (selectedCategory.value === 'all') {
       return suggestions.slice().sort((a, b) => {

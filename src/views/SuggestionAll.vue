@@ -4,11 +4,11 @@
         <div class="flex items-center gap-[2.375rem] ">
           <div class="flex items-center gap-4">
             <img src="../assets/bulb-2.png" class=""/>
-            <span class="font-bold text-[1.125rem] text-[#fff]">{{ sortedSuggestions?.length }} Suggestions</span>
+            <span class="font-bold text-[1.125rem] text-[#fff]">{{ selectedSuggestions?.length }} Suggestions</span>
           </div>
           <div class="gap-1 text-[#F2F4FE] text-[0.875rem] flex items-center cursor-pointer">
             <h5 class="font-normal">Sort by : </h5>
-            <div @click=" optionToggle = !optionToggle" class="flex gap-2 items-center">
+            <div @click="optionToggle = !optionToggle" class="flex gap-2 items-center">
               <h3 class="font-bold text-[0.875rem]"> {{ voteOptions }}</h3>
               <img :src="navUp" alt="nav-toggle" class="py-2" v-if="optionToggle"/>
               <img :src="navDown" alt="nav-toggle" class="py-2" v-else/>
@@ -36,7 +36,7 @@
         <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
       </header>
       <main class="flex flex-col gap-y-[1.25rem]"  v-if="selectedSuggestions?.length">
-        <div  class="flex justify-between items-center w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem]" v-for="(item,index) in selectedSuggestions " :key="index" >
+        <div @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] border" v-for="(item,index) in selectedSuggestions " :key="index" >
           <div class="flex gap-[2.5rem]">
             <div class="w-[2.5rem] h-[3.3125rem] flex flex-col justify-center transition hover:bg-[#CFD7FF] items-center gap-y-2  rounded-[0.625rem] bg-[#f2f4fe] ">
               <img src="../assets/icon-arrow-up.svg" alt="up-nav" class="w-2"/>
@@ -44,7 +44,7 @@
             </div>
             <div class="flex flex-col gap-y-[1.0625rem]">
               <div class="flex flex-col gap-y-1">
-                <h2 class="text-[#3a4374] text-[1.25rem] font-bold">{{ item.title }}</h2>
+                <h3 class="text-[#3a4374] text-[1.25rem] font-bold" :class="isHovered[index] ? 'text-[#4661e6]' : ''" >{{ item.title }}</h3>
                 <h3 class="text-[#647196] font-normal text-[1rem] ">{{ item.description }}</h3>
               </div>
               <span class="w-[6.9375rem] h-[1.875rem] rounded-[0.625rem] bg-[#f2f4ff] text-[#4661e6] font-semibold text-[0.8125rem] flex justify-center items-center px-4 py-[0.6875rem]">{{ item.category }}</span>
@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
   import { RouterLink } from 'vue-router';
-  import { defineProps,ref,computed  } from 'vue';
+  import { defineProps,ref } from 'vue';
   import type { PropType } from 'vue';
   import type ProductReqList from '../Interface'
   import EmptySugxn from '../assets/empty-suggestion.svg'
@@ -83,30 +83,22 @@
   import tick from '../assets/option-tick.svg'
    
   const optionToggle = ref(false)
-
   
-
   // eslint-disable-next-line
   const { selectedSuggestions,voteOptions } = defineProps({
     selectedSuggestions: Array as PropType<ProductReqList[]>,
     voteOptions: String,
     optionsUpdater: Function
   })
+
+  const isHovered = ref(Array(selectedSuggestions?.length).fill(false))
+    
+  const onMouseOver = (index) => {
+    return isHovered.value[index] = true;
+  }
   
-  // const sortedSuggestions = computed(() => {
-  //   const suggestionsCopy = [...selectedSuggestions];
-  //   switch(voteOptions){
-  //     case 'Most Upvotes':
-  //       return suggestionsCopy.sort((a,b) => b.upvotes - a.upvotes);
-  //     case 'Least Upvotes':
-  //       return suggestionsCopy.sort((a,b) => a.upvotes - b.upvotes);
-  //     case 'Most Comments':
-  //       return suggestionsCopy.sort((a,b) => (b.comments?.length || 0) - (a.comments?.length || 0)) 
-  //     case 'Least Comments':
-  //       return suggestionsCopy.sort((a,b) => (a.comments?.length || 0) - (b.comments?.length || 0)) 
-  //     default:
-  //       return suggestionsCopy
-  //   }
-  // })
-  // console.log(selectedSuggestions)
+  const onMouseOut = (index) => {
+    return isHovered.value[index] = false;
+  }
 </script>
+
