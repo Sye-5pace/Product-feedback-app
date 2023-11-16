@@ -27,19 +27,19 @@
                         <div class="flex gap-4 items-center">                  
                             <span class="w-2 h-2 rounded-full bg-[#F49F85]"></span> <p>Planned</p>
                         </div>
-                        <span class="font-bold self-end">{{ planned.length }}</span>
+                        <span class="font-bold self-end">{{ planned?.length }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-4 items-center">
                             <span class="w-2 h-2 rounded-full bg-[#AD1FEA]"></span> <p>In-progress</p> 
                         </div>
-                        <span class="font-bold self-end">{{ progress.length }}</span>
+                        <span class="font-bold self-end">{{ progress?.length }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <div class="flex gap-4 items-center">
                             <span class="w-2 h-2 rounded-full bg-[#62bcfa]"></span> <p>Live</p> 
                         </div>
-                        <span class="font-bold self-end">{{ live.length }}</span>
+                        <span class="font-bold self-end">{{ live?.length }}</span>
                     </div>
                 </div>
             </div>
@@ -49,21 +49,23 @@
 
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
-    import { defineProps } from 'vue'
+    import { defineProps,ref } from 'vue'
     import type { PropType } from 'vue';
     import ProductsInfo from '../Interface'
     import type ProductReqList from '../Interface'
 
     // eslint-disable-next-line
     const { productData,selectCategory,selectedCategory } = defineProps({
-        productData: Array as PropType<ProductsInfo[]> ,
+        live: Array as PropType<ProductsInfo[]> ,
+        planned: Array as PropType<ProductsInfo[]> ,
+        progress: Array as PropType<ProductsInfo[]> ,
         selectCategory: Function,
         selectedCategory: String,
     })
    
-    const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
-    const live: ProductReqList[] = productData.filter( data => data.status === 'live')
-    const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
+    // const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
+    // const live: ProductReqList[] = productData.filter( data => data.status === 'live')
+    // const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
     
     
 </script>

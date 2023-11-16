@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full">
+  <section class="w-full flex flex-col gap-y-[3rem]">
     <header class="flex pl-[2rem] pr-[2.5rem] items-center justify-between w-full bg-[#373f68] h-[7.0625rem] rounded-[0.625rem]">   
         <div class="flex flex-col gap-1">       
             <div class="flex gap-2 items-center">
@@ -10,6 +10,7 @@
         </div>
         <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
     </header>
+    <main class="border"></main>  
   </section>
 </template>
 

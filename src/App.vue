@@ -1,7 +1,7 @@
 <template>
   <main class="flex items-center w-full min-h-screen p-0 m-0 border-box bg-[#F7F8FD] font-jost">
     <div class="my-[3.875rem] w-[69.375rem]  mx-[10.3125rem] flex gap-[1.875rem] ">
-      <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory" :productData="productData"/>
+      <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory" :productData="productData" :planned="planned" :live="live" :progress="progress"/>
       <router-view :selectedSuggestions="selectedSuggestions" :voteOptions="voteOptions" :optionsUpdater="optionsUpdater"></router-view>
     </div>
   </main>
@@ -20,6 +20,9 @@
   const suggestions: ProductReqList[] = productData.filter( data => data.status === 'suggestion')
   const selectedCategory = ref('all') ;
   const voteOptions = ref('Most Upvotes')
+  const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
+  const live: ProductReqList[] = productData.filter( data => data.status === 'live')
+  const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
   
   
   const selectedSuggestions = computed(() => {
