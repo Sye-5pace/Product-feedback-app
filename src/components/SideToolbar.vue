@@ -49,13 +49,13 @@
 
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
-    import { defineProps,ref } from 'vue'
+    import { defineProps } from 'vue'
     import type { PropType } from 'vue';
     import ProductsInfo from '../Interface'
     import type ProductReqList from '../Interface'
 
     // eslint-disable-next-line
-    const { productData,selectCategory,selectedCategory } = defineProps({
+    const { live,planned,progress,selectCategory,selectedCategory } = defineProps({
         live: Array as PropType<ProductsInfo[]> ,
         planned: Array as PropType<ProductsInfo[]> ,
         progress: Array as PropType<ProductsInfo[]> ,
