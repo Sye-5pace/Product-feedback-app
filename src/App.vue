@@ -19,10 +19,13 @@
   const productData: ProductsInfo = reactive(data.productRequests)
   const suggestions: ProductReqList[] = productData.filter( data => data.status === 'suggestion')
   const selectedCategory = ref('all') ;
+  const planned = ref<ProductReqList>([])
+  const live = ref<ProductReqList>([])
+  const progress = ref<ProductReqList>([])
   const voteOptions = ref('Most Upvotes')
-  const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
-  const live: ProductReqList[] = productData.filter( data => data.status === 'live')
-  const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
+  planned.value= productData.filter( data => data.status === 'planned')
+  live.value= productData.filter( data => data.status === 'live')
+  progress.value = productData.filter( data => data.status === 'in-progress')
   
   
   const selectedSuggestions = computed(() => {
