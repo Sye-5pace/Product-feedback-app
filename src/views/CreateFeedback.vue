@@ -15,7 +15,7 @@
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Title</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Add a short, descriptive headline</p>
                             </div>
-                            <input type="text" class=" rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2">
+                            <input type="text" class=" rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6] ">
                         </div>
                         <div class="flex flex-col gap-y-4">
                             <div>
