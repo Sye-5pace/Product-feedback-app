@@ -3,12 +3,9 @@
     <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory" :productData="productData" :planned="planned" :live="live" :progress="progress"/>
     <SuggestionAll :selectedSuggestions="selectedSuggestions" :voteOptions="voteOptions" :optionsUpdater="optionsUpdater"/>
   </div>
-  <!-- <main class="flex items-center w-full min-h-screen p-0 m-0 border-box bg-[#F7F8FD] font-jost"> -->
-  <!-- </main> -->
 </template>
   
   <script setup lang="ts">
-    // import { RouterView } from 'vue-router'
     import { reactive, computed,ref } from 'vue' 
     import SideToolbar from '../components/SideToolbar.vue'
     import  SuggestionAll from '../components/SuggestionAll.vue'

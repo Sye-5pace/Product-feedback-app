@@ -17,7 +17,7 @@
                             </div>
                             <input type="text" class=" rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6] ">
                         </div>
-                        <div class="flex flex-col gap-y-4">
+                        <div class="flex flex-col gap-y-4" id="choose-category">
                             <div>
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Category</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Choose a category for your feedback</p>
@@ -30,7 +30,7 @@
                                     <img src="../assets/icon-arrow-up.svg" alt="arrow-up"  v-if="isCateVisible"/>
                                     <img src="../assets/icon-arrow-down.svg" alt="arrow-down"  v-else />
                                 </div>
-                                <div class="bg-[#fff]  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] h-[15rem] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isCateVisible">
+                                <div class="bg-[#fff] absolute top-[34.6rem] w-[28.5rem]  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] h-[15rem] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isCateVisible">
                                     <div class="flex px-6 items-center justify-between border-b  cursor-pointer" @click="cateOptions('Feature')">
                                         <h3 class="text-[1rem] text-[#647196]">Feature</h3>
                                         <img :src="tick" alt="tick" :class=" category === 'Feature' ? 'block': 'hidden' "/>
@@ -75,8 +75,8 @@
 <script setup lang="ts">
     import { RouterLink } from 'vue-router'
     import { ref } from 'vue';
-    import navDown from '../assets/white-nav-down.svg'
-    import navUp from '../assets/white-nav-up.svg'
+    import navDown from '../assets/icon-arrow-down.svg'
+    import navUp from '../assets/icon-arrow-up.svg'
     import tick from '../assets/option-tick.svg'
 
 
