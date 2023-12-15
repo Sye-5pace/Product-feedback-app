@@ -21,7 +21,5 @@
   planned.value= productData.filter( data => data.status === 'planned')
   live.value= productData.filter( data => data.status === 'live')
   progress.value = productData.filter( data => data.status === 'in-progress')
-  
-  
-  
+    
 </script>

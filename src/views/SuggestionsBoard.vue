@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[1.875rem] ">
+  <div class="flex gap-[1.875rem] w-full">
     <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory" :productData="productData" :planned="planned" :live="live" :progress="progress"/>
     <SuggestionAll :selectedSuggestions="selectedSuggestions" :voteOptions="voteOptions" :optionsUpdater="optionsUpdater"/>
   </div>
@@ -8,7 +8,7 @@
   <script setup lang="ts">
     import { reactive, computed,ref } from 'vue' 
     import SideToolbar from '../components/SideToolbar.vue'
-    import  SuggestionAll from '../components/SuggestionAll.vue'
+    import SuggestionAll from '../components/SuggestionAll.vue'
     import type ProductsInfo from '../Interface'
     import type ProductReqList from '..App.vue/Interface' 
     import data from '../assets/data'

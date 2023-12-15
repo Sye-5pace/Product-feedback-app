@@ -1,22 +1,20 @@
 <template>
     <section class="flex justify-center items-center w-full">
-        <div class="flex flex-col gap-y-[0.3rem]">
+        <div class="flex flex-col gap-y-[0.85rem]">
             <header class="flex gap-2 items-center">
                 <img src="../assets/icon-arrow-left.svg" alt="back-nav" class="w-2 "/>
                 <router-link class="text-[#647196] font-bold text-[0.875rem]" to="/">Go Back</router-link>
             </header>
             <main class=" w-[33.75rem] ">
                 <img src="../assets/create-icon.svg" alt="" class="relative -bottom-[1.6rem] left-[3.5rem] "/>
-                <div class="px-[2.625rem] py-[2.8125rem] bg-[#fff] w-full rounded-[0.625rem] h-[41.0625rem] flex flex-col gap-y-[2.5rem]">
+                <div class="px-[2.625rem] py-[2.8125rem] bg-[#fff] w-full rounded-[0.625rem] h-full flex flex-col gap-y-[2.5rem]">
                     <h2 class="text-[#3a4374] text-[1.5rem] font-bold">Create New Feedback</h2>
                     <div class="flex flex-col gap-y-6">
                         <div class="flex flex-col gap-y-4">
-                            <div>
-                                <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Title</h4>
-                                <p class="text-[#647196] text-[0.875rem] ">Add a short, descriptive headline</p>
-                            </div>
-                            <input type="text" class=" rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6] " v-model="feedback.description">
-                        </div>
+                            <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Title</h4>
+                            <p class="text-[#647196] text-[0.875rem] ">Add a short, descriptive headline</p>
+                            <input type="text" class="px-6 rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6]  w-full" :class="isValid ? 'border border-[#D73737]' : ''" v-model="feedback.description">
+                        </div>    
                         <div class="flex flex-col gap-y-4" id="choose-category">
                             <div>
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Category</h4>
@@ -52,17 +50,49 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="flex flex-col gap-y-4" id="choose-category">
+                            <div>
+                                <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Status</h4>
+                                <p class="text-[#647196] text-[0.875rem] ">Choose a state for your feedback</p>
+                            </div>
+                            <div class="flex flex-col gap-y-4">
+                                <div class="w-[28.5rem] h-[3rem] bg-[#f7f8fd] flex items-center hover:border hover:border-[#4661e6] rounded-[0.3125rem] px-6 cursor-pointer justify-between" @click=" isStateVisible = !isStateVisible">
+                                    <span class="text-[#3a4374] text-[0.9375rem]">  {{ status }} </span>
+                                    <img :src="navUp" alt="arrow-up"  v-if="isStateVisible"/>
+                                    <img :src="navDown" alt="arrow-down"  v-else />
+                                </div>
+                                <div class="bg-[#fff] absolute top-[40rem] w-[28.5rem]  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isStateVisible">
+                                    <div class="flex px-6 items-center justify-between border-b cursor-pointer" @click="stateOptions('Suggestions')">
+                                        <h3 class="text-[1rem] text-[#647196]">Suggestions</h3>
+                                        <img :src="tick" alt="tick" :class=" status === 'Suggestions' ? 'block': 'hidden' "/>
+                                    </div>
+                                    <div class="flex px-6 items-center justify-between border-b  cursor-pointer" @click="stateOptions('Planned')">
+                                        <h3 class="text-[1rem] text-[#647196]">Planned</h3>
+                                        <img :src="tick" alt="tick" :class=" status === 'Planned' ? 'block': 'hidden' "/>
+                                    </div>
+                                    <div class="flex px-6 items-center justify-between cursor-pointer border-b " @click="stateOptions('In-progress')">
+                                        <h3 class="text-[1rem] text-[#647196]">In-progress</h3>
+                                        <img :src="tick" alt="tick" :class=" status === 'In-progress' ? 'block': 'hidden' "/>
+                                    </div>
+                                    <div class="flex px-6 items-center justify-between cursor-pointer" @click="stateOptions('Live')">
+                                        <h3 class="text-[1rem] text-[#647196] ">Live</h3>
+                                        <img :src="tick" alt="tick" :class=" status === 'Live' ? 'block': 'hidden' "/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="flex flex-col gap-y-4">
                             <div>
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Detail</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Include any specific comments on what should be improved, added, etc.</p>
                             </div>
-                            <textarea v-model="feedback.message"   class="h-[6rem] rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2" rows="4" ></textarea>
+                            <textarea v-model="feedback.message" :class="isValid ? 'border border-[#D73737]' : ''"   class="h-[6rem] px-6 rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2" rows="4" ></textarea>
+                            <p class="text-[#D73737]" v-if="isValid">Can't be empty</p>
                         </div>
                     </div>
                     <div class="flex gap-4 justify-end">
                         <button class="h-[2.75rem] px-6 bg-[#3a4374] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="cancelFeedback">cancel</button>
-                        <button class="h-[2.75rem] px-6 bg-[#AD1FEA] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="addFeedback">Add Feedback</button>
+                        <button class="h-[2.75rem] px-6 bg-[#AD1FEA] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="createFeedback">Add Feedback</button>
                     </div>
                 </div>
             </main>
@@ -78,25 +108,43 @@
     import tick from '../assets/option-tick.svg'
 
 
-    const category = ref('Feature')
-    const isCateVisible = ref(false)
+    const category = ref<string>('Feature')
+    const status = ref<string>('Planned')
+    const isValid = ref<boolean>(false)
+    const isCateVisible = ref<boolean>(false)
+    const isStateVisible = ref<boolean>(false)
     const cateOptions = (option: string) =>{ 
         category.value = option
+    }
+    const stateOptions = (option: string) =>{ 
+        status.value = option
     }
 
     //making feedbackform reactive
     const categoryInFeedback = computed(() => category.value);
+    const statusInFeedback = computed(() => status.value);
+
     const feedback = ref({
         description: '',
         category: categoryInFeedback,
+        status: statusInFeedback,
         message: ''  
     })
     
-
     const addFeedback = () => {
-        const { description, category, message } = feedback.value
-        console.log('Feedback data:',{ description, category, message })
+        const { description, category, status, message } = feedback.value
+        console.log('Feedback data:',{ description, category, status, message })
     }
+
+    const createFeedback = () => {
+        if(feedback.value.message){
+            addFeedback();
+            isValid.value = false;
+        }else{
+            isValid.value = true;
+        }
+    }        
+    
 
     const cancelFeedback = () => {
         feedback.value = {
