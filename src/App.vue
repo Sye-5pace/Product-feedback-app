@@ -1,6 +1,6 @@
 <template>
   <main class="flex items-center w-full min-h-screen p-0 m-0 border-box bg-[#F7F8FD] font-jost">
-    <div class="my-[3.875rem] w-[69.375rem]  mx-[10.3125rem] flex gap-[1.875rem] ">
+    <div class="my-[2.5rem] w-[69.375rem]  mx-[10.3125rem] flex gap-[1.875rem] ">
       <router-view :planned="planned" :live="live" :progress="progress"></router-view>
     </div>
   </main>
