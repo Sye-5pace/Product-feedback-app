@@ -150,6 +150,7 @@
         feedback.value = {
             description: '',
             category: category.value,
+            status: status.value,
             message: ''
         }
     }
