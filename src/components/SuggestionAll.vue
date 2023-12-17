@@ -36,17 +36,17 @@
         <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
       </header>
       <main class="flex flex-col gap-y-[1.25rem]"  v-if="selectedSuggestions?.length">
-        <routerLink :to="{ name: 'feedback-detail', params: { id: index}}"  @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] " v-for="(item,index) in selectedSuggestions " :key="index" >
+        <div  @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] " v-for="(item,index) in selectedSuggestions " :key="index" >
           <div class="flex gap-[2.5rem]">
             <div class="w-[2.5rem] h-[3.3125rem] flex flex-col justify-center transition hover:bg-[#CFD7FF] items-center gap-y-2  rounded-[0.625rem] bg-[#f2f4fe] ">
               <img src="../assets/icon-arrow-up.svg" alt="up-nav" class="w-2"/>
               <h3 class="font-black text-[0.8125rem] text-[#3a4374]">{{ item.upvotes }}</h3>
             </div>
             <div class="flex flex-col gap-y-[1.0625rem]">
-              <div class="flex flex-col gap-y-1">
+              <routerLink :to="{ name: 'feedback-detail', params: { id: index}}" class="flex flex-col gap-y-1">
                 <h3 class="text-[#3a4374] text-[1.25rem] font-bold" :class="isHovered[index] ? 'text-[#4661e6]' : ''" >{{ item.title }}</h3>
                 <h3 class="text-[#647196] font-normal text-[1rem] ">{{ item.description }}</h3>
-              </div>
+              </routerLink>
               <span class="w-[6.9375rem] h-[1.875rem] rounded-[0.625rem] bg-[#f2f4ff] text-[#4661e6] font-semibold text-[0.8125rem] flex justify-center items-center px-4 py-[0.6875rem]">{{ item.category }}</span>
             </div>
           </div>
@@ -54,7 +54,7 @@
             <img src="../assets/icon-comments.svg" alt="" class="w-[1.25rem] h-[1rem]"/>
             <h4 class="font-bold text-[#3a4374] text-[1rem] ">{{ item.comments?.length || 0 }}</h4>
           </div>
-        </routerLink>
+        </div>
       </main>
       <section class="flex flex-col justify-center items-center gap-y-[2rem] bg-[#fff] rounded-[0.625rem] h-full " v-else>
         <img :src="EmptySugxn" alt="empty-suggestion" class="w-[8.1025rem] h-[8.55rem]"/>
