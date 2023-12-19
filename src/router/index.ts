@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import  RoadmapBoard from '../views/RoadmapBoard.vue'
-import  FeedbackDetail from '../views/FeedbackDetail.vue'
+import  RoadmapBoard     from '../views/RoadmapBoard.vue'
+import  FeedbackDetail   from '../views/FeedbackDetail.vue'
 import  SuggestionsBoard from '../views/SuggestionsBoard.vue'
-// import  SuggestionAll from '../components/SuggestionAll.vue'
-import CreateFeedback from '../views/CreateFeedback.vue'
+import  CreateFeedback   from '../views/CreateFeedback.vue'
 
 
 const routes: Array<RouteRecordRaw> = [

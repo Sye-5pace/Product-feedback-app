@@ -43,7 +43,7 @@
               <h3 class="font-black text-[0.8125rem] text-[#3a4374]">{{ item.upvotes }}</h3>
             </div>
             <div class="flex flex-col gap-y-[1.0625rem]">
-              <routerLink :to="{ name: 'feedback-detail', params: { id: index}}" class="flex flex-col gap-y-1">
+              <routerLink :to="{ name: 'feedback-detail', params: { id: item.id}}" class="flex flex-col gap-y-1">
                 <h3 class="text-[#3a4374] text-[1.25rem] font-bold" :class="isHovered[index] ? 'text-[#4661e6]' : ''" >{{ item.title }}</h3>
                 <h3 class="text-[#647196] font-normal text-[1rem] ">{{ item.description }}</h3>
               </routerLink>

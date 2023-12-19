@@ -135,7 +135,7 @@
       "upvotes": 42,
       "status": "suggestion",
       "description": "Stay updated on comments and solutions other people post.",
-      "comments": [
+         "comments": [
         {
           "id": 8,
           "content": "I also want to be notified when devs I follow submit projects on FEM. Is in-app notification also in the pipeline?",
