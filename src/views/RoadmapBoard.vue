@@ -102,8 +102,6 @@
 <script setup lang="ts"> 
   import { RouterLink } from 'vue-router'
   import { onMounted,computed } from 'vue';
-  import type { PropType } from 'vue';
-  import ProductsInfo from '../Interface'
   import { useFeedbackStore } from '../store'
 
   const store = useFeedbackStore()
