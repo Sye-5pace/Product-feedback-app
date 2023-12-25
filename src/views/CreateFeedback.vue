@@ -1,7 +1,7 @@
 <template>
     <section class="flex justify-center items-center w-full">
         <div class="flex flex-col gap-y-[0.85rem]">
-            <header class="flex gap-2 items-center">
+            <header class="flex gap-2 items-center" v-once>
                 <img src="../assets/icon-arrow-left.svg" alt="back-nav" class="w-2 "/>
                 <router-link class="text-[#647196] font-bold text-[0.875rem]" to="/">Go Back</router-link>
             </header>
@@ -13,7 +13,7 @@
                         <div class="flex flex-col gap-y-4">
                             <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Title</h4>
                             <p class="text-[#647196] text-[0.875rem] ">Add a short, descriptive headline</p>
-                            <input type="text" class="px-6 rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6]  w-full" :class="isValid ? 'border border-[#D73737]' : ''" v-model="feedback.description">
+                            <input type="text" class="px-6 rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6]  w-full" :class="isValid ? 'border border-[#D73737]' : ''" v-model="feedback.title">
                         </div>    
                         <div class="flex flex-col gap-y-4" id="choose-category">
                             <div>
@@ -86,11 +86,11 @@
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Detail</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Include any specific comments on what should be improved, added, etc.</p>
                             </div>
-                            <textarea v-model="feedback.message" :class="isValid ? 'border border-[#D73737]' : ''"   class="h-[6rem] px-6 rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2" rows="4" ></textarea>
+                            <textarea v-model="feedback.description" :class="isValid ? 'border border-[#D73737]' : ''"   class="h-[6rem] px-6 rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2" rows="4" ></textarea>
                             <p class="text-[#D73737]" v-if="isValid">Can't be empty</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 justify-end">
+                    <div class="flex gap-4 justify-end" v-once>
                         <button class="h-[2.75rem] px-6 bg-[#3a4374] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="cancelFeedback">cancel</button>
                         <button class="h-[2.75rem] px-6 bg-[#AD1FEA] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="createFeedback">Add Feedback</button>
                     </div>
@@ -106,7 +106,10 @@
     import navDown from '../assets/icon-arrow-down.svg'
     import navUp from '../assets/icon-arrow-up.svg'
     import tick from '../assets/option-tick.svg'
+    import { useFeedbackStore } from '../store'
 
+
+    const store = useFeedbackStore()
 
     const category = ref<string>('Feature')
     const status = ref<string>('Planned')
@@ -125,20 +128,15 @@
     const statusInFeedback = computed(() => status.value);
 
     const feedback = ref({
-        description: '',
+        title: '',
         category: categoryInFeedback,
         status: statusInFeedback,
-        message: ''  
+        description: ''  
     })
     
-    const addFeedback = () => {
-        const { description, category, status, message } = feedback.value
-        console.log('Feedback data:',{ description, category, status, message })
-    }
-
     const createFeedback = () => {
-        if(feedback.value.message){
-            addFeedback();
+        if(feedback.value.description){
+            store.addFeedback(feedback.value)
             isValid.value = false;
         }else{
             isValid.value = true;
@@ -148,10 +146,10 @@
 
     const cancelFeedback = () => {
         feedback.value = {
-            description: '',
+            title: '',
             category: category.value,
             status: status.value,
-            message: ''
+            description: ''
         }
     }
 </script>

@@ -49,23 +49,29 @@
 
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
-    import { defineProps } from 'vue'
+    import { defineProps,computed, onMounted } from 'vue'
     import type { PropType } from 'vue';
     import ProductsInfo from '../Interface'
     import type ProductReqList from '../Interface'
+    import { useFeedbackStore } from '../store'
 
+
+    const store = useFeedbackStore()
+    
+    onMounted(() => {
+        store.initializeData()    
+    })
+
+    const live = computed(() => store.live)
+    const planned = computed(() => store.planned)
+    const progress = computed(() => store.progress)
+
+    
     // eslint-disable-next-line
-    const { live,planned,progress,selectCategory,selectedCategory } = defineProps({
-        live: Array as PropType<ProductsInfo[]> ,
-        planned: Array as PropType<ProductsInfo[]> ,
-        progress: Array as PropType<ProductsInfo[]> ,
+    const { selectCategory,selectedCategory } = defineProps({
         selectCategory: Function,
         selectedCategory: String,
     })
    
-    // const planned: ProductReqList[] = productData.filter( data => data.status === 'planned')
-    // const live: ProductReqList[] = productData.filter( data => data.status === 'live')
-    // const progress: ProductReqList[] = productData.filter( data => data.status === 'in-progress')
-    
     
 </script>

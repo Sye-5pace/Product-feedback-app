@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer" >+ Add Feedback</router-link>
+        <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] py-3 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer"  v-once>+ Add Feedback</router-link>
       </header>
       <main class="flex flex-col gap-y-[1.25rem]"  v-if="selectedSuggestions?.length">
         <div  @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] " v-for="(item,index) in selectedSuggestions " :key="index" >

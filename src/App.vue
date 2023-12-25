@@ -8,18 +8,16 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
-  import { reactive,ref } from 'vue' 
-  import type ProductsInfo from './Interface'
+  import { ref,onMounted } from 'vue' 
   import type ProductReqList from './Interface' 
-  import data from './assets/data'
+  import { useFeedbackStore } from './store'
   
-
-  const productData: ProductsInfo = reactive(data.productRequests)
+  
+  const store = useFeedbackStore()
   const planned = ref<ProductReqList>([])
   const live = ref<ProductReqList>([])
   const progress = ref<ProductReqList>([])
-  planned.value= productData.filter( data => data.status === 'planned')
-  live.value= productData.filter( data => data.status === 'live')
-  progress.value = productData.filter( data => data.status === 'in-progress')
-    
+  
+
+ 
 </script>

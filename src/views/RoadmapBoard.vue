@@ -69,7 +69,7 @@
       </section>
       <section class="flex flex-col gap-y-8">
         <div class="flex flex-col gap-y-1">
-          <h3 class="font-bold text-[1.125rem] text-[#3a4375]">Live ({{ live?.length }})</h3>
+          <h3 class="font-bold text-[1.125rem] text-[#3a4375]">Live ({{ live?.length  }})</h3>
           <p class="text-[#647196] text-[1rem]">Released features</p>
         </div>
         <div class="flex flex-col gap-y-6">
@@ -100,18 +100,20 @@
 </template>
 
 <script setup lang="ts"> 
-    import { RouterLink } from 'vue-router'
-    import { defineProps } from 'vue';
-    import type { PropType } from 'vue';
-    import ProductsInfo from '../Interface'
+  import { RouterLink } from 'vue-router'
+  import { onMounted,computed } from 'vue';
+  import type { PropType } from 'vue';
+  import ProductsInfo from '../Interface'
+  import { useFeedbackStore } from '../store'
 
-    //eslint-disable-next-line
-    const { planned, live , progress } = defineProps({
-      planned : Array as PropType<ProductsInfo[]>,
-      progress : Array as PropType<ProductsInfo[]>,
-      live: Array as PropType<ProductsInfo[]> 
-    })
+  const store = useFeedbackStore()
 
-    console.log(planned)
+  onMounted(() => {
+    store.initializeData()
+  })
 
+  const live = computed(() => store.live)
+  const planned = computed(() => store.planned)
+  const progress = computed(() => store.progress)
+  
 </script>
