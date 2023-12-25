@@ -8,7 +8,7 @@ export const useFeedbackStore =  defineStore('feedback' ,{
     }),
     getters: {
         suggestions: (state) => {
-            return state.productData?.filter((data) => data.status === 'suggestions')
+            return state.productData?.filter((data) => data.status === 'suggestion')
         },
         live: (state)=> {
             return state.productData?.filter((data) => data.status === 'live')
