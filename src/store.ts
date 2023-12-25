@@ -29,6 +29,8 @@ export const useFeedbackStore =  defineStore('feedback' ,{
             }
         },
         addFeedback(feedback: ProductReqList){
+            const id = this.productData.length + 1;
+            feedback.id = id;
             this.productData.push(feedback)
             localStorage.setItem('productData',JSON.stringify(this.productData))
         }  

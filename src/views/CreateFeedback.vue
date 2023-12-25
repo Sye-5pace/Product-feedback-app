@@ -1,6 +1,7 @@
 <template>
     <section class="flex justify-center items-center w-full">
         <div class="flex flex-col gap-y-[0.85rem]">
+            <div v-show="feedbackTrack" class="-translate-x-36 transition -right-[8rem] rounded-[0.3125rem] font-medium p-2 bg-green-400 fixed text-white feedback-container shadow-lg" >Feedback created successfully</div>
             <header class="flex gap-2 items-center" v-once>
                 <img src="../assets/icon-arrow-left.svg" alt="back-nav" class="w-2 "/>
                 <router-link class="text-[#647196] font-bold text-[0.875rem]" to="/">Go Back</router-link>
@@ -66,15 +67,15 @@
                                         <h3 class="text-[1rem] text-[#647196]">Suggestions</h3>
                                         <img :src="tick" alt="tick" :class=" status === 'Suggestions' ? 'block': 'hidden' "/>
                                     </div>
-                                    <div class="flex px-6 items-center justify-between border-b  cursor-pointer" @click="stateOptions('Planned')">
+                                    <div class="flex px-6 items-center justify-between border-b  cursor-pointer" @click="stateOptions('planned')">
                                         <h3 class="text-[1rem] text-[#647196]">Planned</h3>
                                         <img :src="tick" alt="tick" :class=" status === 'Planned' ? 'block': 'hidden' "/>
                                     </div>
-                                    <div class="flex px-6 items-center justify-between cursor-pointer border-b " @click="stateOptions('In-progress')">
+                                    <div class="flex px-6 items-center justify-between cursor-pointer border-b " @click="stateOptions('in-progress')">
                                         <h3 class="text-[1rem] text-[#647196]">In-progress</h3>
                                         <img :src="tick" alt="tick" :class=" status === 'In-progress' ? 'block': 'hidden' "/>
                                     </div>
-                                    <div class="flex px-6 items-center justify-between cursor-pointer" @click="stateOptions('Live')">
+                                    <div class="flex px-6 items-center justify-between cursor-pointer" @click="stateOptions('live')">
                                         <h3 class="text-[1rem] text-[#647196] ">Live</h3>
                                         <img :src="tick" alt="tick" :class=" status === 'Live' ? 'block': 'hidden' "/>
                                     </div>
@@ -100,9 +101,10 @@
     </section>
 </template>
 
+
 <script setup lang="ts">
     import { RouterLink } from 'vue-router'
-    import { ref,computed } from 'vue';
+    import { ref,computed,onMounted } from 'vue';
     import navDown from '../assets/icon-arrow-down.svg'
     import navUp from '../assets/icon-arrow-up.svg'
     import tick from '../assets/option-tick.svg'
@@ -112,16 +114,22 @@
     const store = useFeedbackStore()
 
     const category = ref<string>('Feature')
-    const status = ref<string>('Planned')
+    const status = ref<string>('planned')
     const isValid = ref<boolean>(false)
+    const feedbackTrack = ref<boolean>(false)
     const isCateVisible = ref<boolean>(false)
     const isStateVisible = ref<boolean>(false)
+    const id = ref( store.productData.length + 1)
     const cateOptions = (option: string) =>{ 
         category.value = option
     }
     const stateOptions = (option: string) =>{ 
         status.value = option
     }
+
+    onMounted(() => {
+        store.initializeData()
+    })
 
     //making feedbackform reactive
     const categoryInFeedback = computed(() => category.value);
@@ -130,14 +138,37 @@
     const feedback = ref({
         title: '',
         category: categoryInFeedback,
+        upvotes: 0,
         status: statusInFeedback,
-        description: ''  
+        description: '',
+        comments:[],
+
     })
+
+    console.log('feedbacks:', JSON.stringify(store.productData));
     
     const createFeedback = () => {
         if(feedback.value.description){
-            store.addFeedback(feedback.value)
+            store.addFeedback({
+                id: id.value,
+                title: feedback.value.title,
+                category: feedback.value.category,
+                upvotes: feedback.value.upvotes,
+                status: feedback.value.status,
+                description: feedback.value.description,
+                comments: feedback.value.comments,
+            })
             isValid.value = false;
+            feedbackTrack.value = true
+            console.log('feedback added:', JSON.stringify(store.productData));
+            feedback.value = {
+            title: '',
+            upvotes: 0,
+            category: category.value,
+            status: status.value,
+            description: '',
+            comments:[],
+        }
         }else{
             isValid.value = true;
         }
@@ -147,9 +178,11 @@
     const cancelFeedback = () => {
         feedback.value = {
             title: '',
+            upvotes: 0,
             category: category.value,
             status: status.value,
-            description: ''
+            description: '',
+            comments:[],
         }
     }
 </script>
