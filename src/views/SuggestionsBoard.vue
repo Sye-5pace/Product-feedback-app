@@ -1,12 +1,12 @@
 <template>
-  <div class="flex gap-[1.875rem] w-full">
-    <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory"  :planned="planned" :live="live" :progress="progress"/>
+  <div class="desktop:flex desktop:flex-row desktop:gap-[1.875rem] w-full tablet:flex-col tablet:flex tablet:gap-y-8 ">
+    <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory"  />
     <SuggestionAll :selectedSuggestions="selectedSuggestions" :voteOptions="voteOptions" :optionsUpdater="optionsUpdater"/>
   </div>
 </template>
   
   <script setup lang="ts">
-    import { reactive, computed,ref,onMounted } from 'vue' 
+    import { computed,ref,onMounted } from 'vue' 
     import SideToolbar from '../components/SideToolbar.vue'
     import SuggestionAll from '../components/SuggestionAll.vue'
     import type ProductReqList from '../Interface' 

@@ -5,11 +5,12 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
+    screens:{
+      'mobile':{'min':'200px','max':'600px'},
+      'tablet':{'min':'600px','max':'960px'},
+      'desktop':{'min':'960px'}
+    },
     extend: {
-      // backgroundImage: {
-      //   'oval': "url('../assets/oval.svg')",
-      //   // You can define more background images here as needed.
-      // },
       fontFamily: {
         jost: ['Jost', 'sans-serif'],
       }

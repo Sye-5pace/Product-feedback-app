@@ -1,3 +1,21 @@
+<script setup lang="ts"> 
+  import { RouterLink } from 'vue-router'
+  import { onMounted,computed } from 'vue';
+  import { useFeedbackStore } from '../store'
+
+  const store = useFeedbackStore()
+
+  onMounted(() => {
+    store.initializeData()
+  })
+
+  const live = computed(() => store.live)
+  const planned = computed(() => store.planned)
+  const progress = computed(() => store.progress)
+  
+</script>
+
+
 <template>
   <section class="w-full flex flex-col gap-y-[3rem]">
     <header class="flex pl-[2rem] pr-[2.5rem] items-center justify-between w-full bg-[#373f68] h-[7.0625rem] rounded-[0.625rem]">   
@@ -99,19 +117,3 @@
   </section>
 </template>
 
-<script setup lang="ts"> 
-  import { RouterLink } from 'vue-router'
-  import { onMounted,computed } from 'vue';
-  import { useFeedbackStore } from '../store'
-
-  const store = useFeedbackStore()
-
-  onMounted(() => {
-    store.initializeData()
-  })
-
-  const live = computed(() => store.live)
-  const planned = computed(() => store.planned)
-  const progress = computed(() => store.progress)
-  
-</script>
