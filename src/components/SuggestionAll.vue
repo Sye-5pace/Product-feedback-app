@@ -56,12 +56,12 @@
           </div>
         </div>
       </main>
-      <section class="flex flex-col justify-center items-center gap-y-[2rem] bg-[#fff] rounded-[0.625rem] h-full " v-else>
+      <section class="flex flex-col justify-center items-center gap-y-[2rem] bg-[#fff] rounded-[0.625rem] desktop:h-full mobile:mx-6 mobile:h-[28.75rem] tablet:h-[37.5rem]" v-else>
         <img :src="EmptySugxn" alt="empty-suggestion" class="w-[8.1025rem] h-[8.55rem]"/>
         <div class="flex flex-col gap-y-[3rem] w-[25.625rem] h-[11.8125rem] justify-center">
           <div class="flex flex-col gap-y-4">
             <h2 class="text-[#3A4374] font-bold text-[1.5rem] text-center">There is no feedback yet</h2>
-            <p class="text-center text-[#647196] text-[1rem]">
+            <p class="text-center text-[#647196] text-[1rem] mobile:mx-6">
               Got a suggestion? Found a bug that needs to be squashed? 
               We love hearing about new ideas to improve our app.
             </p>

@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop:flex desktop:flex-row desktop:gap-[1.875rem] w-full tablet:flex-col tablet:flex tablet:gap-y-8 ">
+  <div class="desktop:flex desktop:flex-row desktop:gap-[1.5rem] w-full tablet:flex-col tablet:flex  tablet:gap-y-8 ">
     <SideToolbar :selectedCategory="selectedCategory" :selectCategory="selectCategory"  />
     <SuggestionAll :selectedSuggestions="selectedSuggestions" :voteOptions="voteOptions" :optionsUpdater="optionsUpdater"/>
   </div>

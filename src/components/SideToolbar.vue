@@ -7,6 +7,7 @@
     import Oval from '../assets/oval.svg'
     import OvalTab from '../assets/ovaltablet.svg'
     import OvalMob from '../assets/ovalMobile.svg'
+    import MobBg from '../assets/MobBg.png'
     import MenuIcon from '../assets/menu-icon.svg'
     import CloseIcon from '../assets/close-icon.svg'
     import { useFeedbackStore } from '../store'
@@ -32,8 +33,8 @@
 
 
 <template>
-    <section  class="desktop:w-[15.9375rem] flex desktop:flex-col tablet:flex-row tablet:gap-[0.625rem] children:tablet:w-[13.9375rem] children:tablet:h-[11.125rem] desktop:gap-y-6 mobile:w-full">
-        <img :src="Oval" alt="oval" class=" desktop:h-[8.5625rem] desktop:w-[15.9375rem] tablet:hidden mobile:hidden"/>
+    <section  class="desktop:w-[15.9375rem] flex desktop:flex-col tablet:flex-row tablet:gap-[0.625rem] children:tablet:w-[13.9375rem] children:tablet:h-[11.125rem] desktop:gap-y-6 mobile:w-full ">
+        <img :src="Oval" alt="oval" class=" desktop:h-[7.5625rem] desktop:w-[15.9375rem] tablet:hidden mobile:hidden"/>
         <img :src="OvalTab" alt="oval" class=" desktop:hidden tablet:w-[13.9375rem] tablet:h-[11.125rem] mobile:hidden"/>
         <div  class="tablet:hidden desktop:hidden mobile:flex mobile:w-full mobile:justify-between mobile:items-center mobile:px-6 mobile:py-[0.96875rem]" :style="{backgroundImage: `url(${OvalMob})`}">
             <div class="text-[#fff]">
