@@ -1,20 +1,25 @@
 <template>
     <main class="">
-        Feedback new page of id #{{ suggestionsId  }}
+        Feedback new page of id #{{ feedbackDetail  }}
     </main>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue'
+    import { onMounted,computed } from 'vue'
     import { useRoute } from 'vue-router'
+    import { useFeedbackStore } from '../store'
 
 
     const route = useRoute()
-    const suggestionsId = ref<null | string | string[] >(route.params.id)
-    console.log(suggestionsId.value)
+    const store = useFeedbackStore()
 
+    onMounted(() => {
+        store.initializeData()
+    })
 
-
+    const suggestions = computed(() => store.suggestions )
+    
+    const feedbackDetail = computed(() => { 
+      return suggestions.value.filter((item) => String(item.id) === String(route.params.id))
+    })
 </script>
-
-<!-- https://join.slack.com/share/enQtNjM1NDE3ODU4NTU0Mi0yZmYzYjJlNGNiNTI5YTdiMjVkNzExMzRjNzUxYzhlNjAwODFhY2QwODM5M2M1ZTgzOGRmNDkxMzA5ZjE3ZmYz -->
