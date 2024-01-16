@@ -1,6 +1,6 @@
 <template>
   <main class="flex justify-center w-full min-h-screen p-0 m-0 border-box bg-[#F7F8FD] font-jost">
-    <div class="my-[2.5rem] mobile:m-0 desktop:w-[69.375rem] tablet:w-[43.0625rem] tablet:mx-auto desktop:mx-[3rem]  flex mobile:w-full">
+    <div class="my-[2.5rem] mobile:m-0 desktop:w-[69.375rem] tablet:w-[43.0625rem] tablet:mx-auto desktop:mx-[p3rem]  flex mobile:w-full">
       <router-view ></router-view>
     </div>
   </main>
