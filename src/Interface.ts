@@ -20,9 +20,18 @@ export interface ProductReqList{
 interface CommentList {
     id: number;
     content: string;
-    user: {
-        image: string;
-        name: string;
-        username: string;
-    }
+    user: User;
+    replies?: Reply[]
+}
+
+interface Reply {
+    content: string;
+    replyingTo: string;
+    user: User
+}
+
+interface User {
+    image: string;
+    name: string;
+    username: string;
 }
