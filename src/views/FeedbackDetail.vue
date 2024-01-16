@@ -79,22 +79,21 @@
 </template>
 
 <script setup lang="ts">
-    import { onMounted,computed } from 'vue'
-    import { useRoute } from 'vue-router'
-    import { useFeedbackStore } from '../store'
+  import { onMounted,computed } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { useFeedbackStore } from '../store'
 
 
-    const route = useRoute()
-    const store = useFeedbackStore()
+  const route = useRoute()
+  const store = useFeedbackStore()
 
-    onMounted(() => {
-        store.initializeData()
-    })
+  onMounted(() => {
+      store.initializeData()
+  })
 
-    const suggestions = computed(() => store.suggestions )
-    
-    const feedback = computed(() => { 
-      return suggestions.value.find((item) => String(item.id) === String(route.params.id))
-    })
-   
+  const suggestions = computed(() => store.suggestions )
+  
+  const feedback = computed(() => { 
+    return suggestions.value.find((item) => String(item.id) === String(route.params.id))
+  })
 </script>
