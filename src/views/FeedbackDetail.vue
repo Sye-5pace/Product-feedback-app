@@ -1,4 +1,4 @@
-<template>
+<template> 
     <main class="w-full h-full flex  justify-center">
         <div class="border w-[45.625rem] flex flex-col gap-y-6">
           <header class="flex flex-col gap-y-6">
@@ -7,7 +7,7 @@
                       <img src="../assets/icon-arrow-left.svg" alt="back-nav" class="w-2 h-2"/>
                       <router-link class="text-[#647196] font-bold text-[0.875rem] hover:underline cursor-pointer" to="/">Go Back</router-link>
                   </div>
-                  <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#4661E6] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Edit Feedback</button>
+                  <router-link to="/editfeedback" class="text-[#f2f4fe] rounded-[0.625rem] bg-[#4661E6] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Edit Feedback</router-link>
               </nav>
               <section class="w-full bg-[#fff]" v-if="feedback">
                   <div class="flex justify-between items-center  w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] mobile:w-full mobile:h-full" >
@@ -17,10 +17,10 @@
                         <h3 class="font-black text-[0.8125rem] text-[#3a4374]">{{ feedback.upvotes  }}</h3>
                       </div>
                       <div class="flex flex-col gap-y-[1.0625rem]">
-                        <di  class="flex flex-col gap-y-1">
+                        <div  class="flex flex-col gap-y-1">
                           <h3 class="text-[#3a4374] text-[1.25rem] font-bold" >{{ feedback.title }}</h3>
                           <p class="text-[#647196] font-normal text-[1rem] ">{{ feedback.description }}</p>
-                        </di>
+                        </div>
                         
                         <span class="w-[6.9375rem] h-[1.875rem] rounded-[0.625rem] bg-[#f2f4ff] text-[#4661e6] font-semibold text-[0.8125rem] flex justify-center items-center px-4 py-[0.6875rem]">{{  feedback.category  }}</span>
                       </div>
@@ -35,7 +35,7 @@
           <body class="bg-[#fff] px-[2.125rem] pt-6 w-full " v-if="feedback && feedback.comments">
             <h3 class="font-bold text-[#3a4374] text-[1.125rem]">{{ feedback.comments.length }} Comments</h3>
             <ul class="flex flex-col gap-y-8">
-              <li v-for="comment in feedback.comments" :key="comment.id"  class="flex flex-col gap-y-8 pb-8 border-b border-opacity-[0.25] border-[#8c92b3] w-full ">
+              <li v-for="(comment,index) in feedback.comments" :key="index"  class="flex flex-col gap-y-8 pb-8 border-b border-opacity-[0.25] border-[#8c92b3] w-full ">
                 <div class="flex gap-8">
                   <img :src="comment.user.image" :alt="comment.user.name" class="w-[2.5rem]" />
                   <div class="flex flex-col gap-y-[1.0625rem]">
@@ -44,13 +44,9 @@
                         <h2 class="text-[#3a4374] text-[0.875rem] font-bold">{{ comment.user.name }}</h2>
                         <p class="text-[#647196] text-[0.875rem]">{{ comment.user.username  }}</p>
                       </div>
-                      <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end hover:underline cursor-pointer" @click=" isReply = !isReply">Reply</h4>
+                      <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end hover:underline cursor-pointer" @click="toggleReply(index)">Reply</h4>
                     </div>
                     <p class="text-[#647196] text-[0.9375rem]">{{ comment.content }}</p>
-                    <div v-show="isReply" class="w-full flex justify-between  transition">
-                      <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer"></textarea> 
-                      <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Reply</button>
-                    </div>
                   </div>                  
                 </div>                
                 <div v-if="comment.replies" >
@@ -73,6 +69,10 @@
 
                     </li>
                   </ul>
+                </div>
+                <div v-show="toggleReply(index)" class="pl-[4.5rem] w-full justify-end flex gap-4 transition">
+                  <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer"></textarea> 
+                  <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Reply</button>
                 </div>
               </li>
             </ul>
@@ -101,11 +101,15 @@
       store.initializeData()
   })
 
-  const isReply = ref<boolean>(false)
-
+  
   const suggestions = computed(() => store.suggestions )
   
   const feedback = computed(() => { 
     return suggestions.value.find((item) => String(item.id) === String(route.params.id))
   })
+
+  const isReplyArray = ref<boolean[]>(Array(feedback.value ? feedback.value.comments.length : 0).fill(false))
+  const toggleReply = ( index: number) => {
+    return isReplyArray.value[index] = !isReplyArray.value[index]
+  }  
 </script>
