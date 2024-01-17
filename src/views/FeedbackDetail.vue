@@ -44,12 +44,15 @@
                         <h2 class="text-[#3a4374] text-[0.875rem] font-bold">{{ comment.user.name }}</h2>
                         <p class="text-[#647196] text-[0.875rem]">{{ comment.user.username  }}</p>
                       </div>
-                      <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end">Reply</h4>
+                      <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end hover:underline cursor-pointer" @click=" isReply = !isReply">Reply</h4>
                     </div>
                     <p class="text-[#647196] text-[0.9375rem]">{{ comment.content }}</p>
-                  </div>  
-                </div>
-                
+                    <div v-show="isReply" class="w-full flex justify-between  transition">
+                      <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer"></textarea> 
+                      <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Reply</button>
+                    </div>
+                  </div>                  
+                </div>                
                 <div v-if="comment.replies" >
                   <ul class="flex flex-col gap-y-8">
                     <li class="flex w-full gap-8" v-for="(reply,index) in comment.replies" :key="index">
@@ -74,15 +77,22 @@
               </li>
             </ul>
           </body>
+          <section class="w-full bg-[#fff] rounded-[0.625rem] px-[2.125rem] flex flex-col gap-y-7 children:border py-8">
+            <h3>Add Comment</h3>
+            <textarea placeholder="Type your comment here" class="bg-[#f7f8fd] pl-6 pt-2 cursor-pointer hover:border-[#4661e6] border placeholder:text-[0.9375rem] w-full h-[4rem] focus:outline-none"></textarea>
+            <div class="flex items-center justify-between">
+              <p class="text-[0.9375rem] text-[#647196]">250 Characters left</p>
+              <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#C75AF6] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Comment</button>
+            </div>
+          </section>
         </div>
     </main>
 </template>
 
 <script setup lang="ts">
-  import { onMounted,computed } from 'vue'
+  import { onMounted,computed,ref } from 'vue'
   import { useRoute } from 'vue-router'
   import { useFeedbackStore } from '../store'
-
 
   const route = useRoute()
   const store = useFeedbackStore()
@@ -90,6 +100,8 @@
   onMounted(() => {
       store.initializeData()
   })
+
+  const isReply = ref<boolean>(false)
 
   const suggestions = computed(() => store.suggestions )
   
