@@ -31,46 +31,46 @@
             </div>
           </section>
       </header>
-      <body class="bg-[#fff] px-[2.125rem] pt-6 w-full " v-if="feedback && feedback.comments">
+      <body class="bg-[#fff] px-[2.125rem] pt-6 w-full flex flex-col gap-y-7" v-if="feedback && feedback.comments">
         <h3 class="font-bold text-[#3a4374] text-[1.125rem]">{{ feedback.comments.length }} Comments</h3>
         <ul class="flex flex-col gap-y-8">
           <li v-for="(comment,index) in feedback.comments" :key="index"  class="flex flex-col gap-y-8 pb-8 border-b border-opacity-[0.25] border-[#8c92b3] w-full ">
-            <!-- <div class="flex "> -->
-              <div class="flex flex-col gap-y-[1.0625rem]">
-                <div class="flex justify-between w-full">
-                  <div class="flex gap-8">
-                    <img :src="comment.user.image" :alt="comment.user.name" class="w-[2.5rem]" />
-                    <div>
-                      <h2 class="text-[#3a4374] text-[0.875rem] font-bold">{{ comment.user.name }}</h2>
-                      <p class="text-[#647196] text-[0.875rem]">{{ comment.user.username  }}</p>
-                    </div>
+            <div class="flex flex-col gap-y-[1.0625rem]">
+              <div class="flex justify-between w-full">
+                <div class="flex gap-8">
+                  <img :src="comment.user.image" :alt="comment.user.name" class="w-[2.5rem] rounded-full" />
+                  <!-- {{ console.log(comment.user.image) }} -->
+                  <div>
+                    <h2 class="text-[#3a4374] text-[0.875rem] font-bold">{{ comment.user.name }}</h2>
+                    <p class="text-[#647196] text-[0.875rem]">{{ comment.user.username  }}</p>
                   </div>
-                  <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end hover:underline cursor-pointer " @click="toggleReply(index)">Reply</h4>
                 </div>
-                <p class="text-[#647196] text-[0.9375rem] ml-[4.5rem] mobile:ml-0">{{ comment.content }}</p>
-              </div>                  
-            <!-- </div>                 -->
-            <div v-if="comment.replies" >
-              <ul class="flex flex-col gap-y-8">
-                <li class="flex w-full gap-8" v-for="(reply,index) in comment.replies" :key="index">
-                  <img :src="reply.user.image"/>
-                  <div class="flex flex-col gap-y-[1.0625rem]">
-                    <div class="flex justify-between w-full">
-                      <div class="flex flex-col">
-                        <h3 class="text-[#3a4374] text-[0.875rem] font-bold">{{ reply.user.name }}</h3> 
-                        <p class="text-[#647196] text-[0.875rem]">@{{ reply.user.username }}</p> 
+                <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end hover:underline cursor-pointer " @click="toggleReply(index)">Reply</h4>
+              </div>
+              <p class="text-[#647196] text-[0.9375rem] ml-[4.5rem] mobile:ml-0">{{ comment.content }}</p>
+              
+              <div v-if="comment.replies" class="">
+                <ul class="flex flex-col gap-y-8 ml-[4.8125rem] mobile:ml-0">
+                  <li class="flex  flex-col w-full gap-8 children:border" v-for="(reply,index) in comment.replies" :key="index">
+                    <div class="flex  gap-[1.0625rem]">
+                      <img :src="reply.user.image" class="w-[2.5rem] h-[2.5rem] rounded-full"/>
+                      <div class="flex justify-between w-full">
+                        <div class="flex flex-col">
+                          <h3 class="text-[#3a4374] text-[0.875rem] font-bold">{{ reply.user.name }}</h3> 
+                          <p class="text-[#647196] text-[0.875rem]">@{{ reply.user.username }}</p> 
+                        </div>
+                        <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end">Reply</h4>
                       </div>
-                      <h4 class="text-[#4661e6] font-semibold text-[0.8125rem] self-end">Reply</h4>
                     </div>
-                    <p class="text-[#647196] text-[0.9375rem]">
+                    <p class="text-[#647196] text-[0.9375rem] ml-[3.625rem] mobile:ml-6">
                       <span class="font-bold text-[#ad1fea]">{{ reply.replyingTo }}</span>
                       {{ reply.content }}
                     </p>
-                  </div>
-
-                </li>
-              </ul>
-            </div>
+  
+                  </li>
+                </ul>
+              </div>
+            </div>                  
             <!-- <div v-show="toggleReply(index)" class="pl-[4.5rem] w-full justify-end flex gap-4 transition">
               <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer"></textarea> 
               <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Reply</button>

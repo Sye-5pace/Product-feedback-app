@@ -76,7 +76,7 @@
   import { RouterLink } from 'vue-router';
   import { defineProps,ref } from 'vue';
   import type { PropType } from 'vue';
-  import type ProductReqList from '../Interface'
+  import type { ProductReqList } from '../Interface'
   import EmptySugxn from '../assets/empty-suggestion.svg'
   import navDown from '../assets/white-nav-down.svg'
   import navUp from '../assets/white-nav-up.svg'
