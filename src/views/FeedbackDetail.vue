@@ -71,10 +71,10 @@
                 </ul>
               </div>
             </div>                  
-            <!-- <div v-show="toggleReply(index)" class="pl-[4.5rem] w-full justify-end flex gap-4 transition">
+            <div v-if="replyVisibility[index]"  class="pl-[4.5rem] w-full justify-end flex gap-4 transition ">
               <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer"></textarea> 
               <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Reply</button>
-            </div> -->
+            </div>
           </li>
         </ul>
       </body>
@@ -109,8 +109,12 @@
     return suggestions.value.find((item) => String(item.id) === String(route.params.id))
   })
 
-  const isReplyArray = ref<boolean[]>(Array(feedback.value ? feedback.value.comments.length : 0).fill(false))
-  const toggleReply = ( index: number) => {
-    return isReplyArray.value[index] = !isReplyArray.value[index]
-  }  
+ 
+  // Use an array to track the visibility of reply sections
+  const replyVisibility = ref(Array(feedback.value?.comments.length).fill(false))
+
+  const toggleReply = (index) => {
+    // Toggle the visibility of the reply section at the specified index
+    replyVisibility.value[index] = !replyVisibility.value[index]
+  }
 </script>
