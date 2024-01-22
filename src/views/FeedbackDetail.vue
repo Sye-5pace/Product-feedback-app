@@ -83,7 +83,7 @@
         <textarea placeholder="Type your comment here" class="bg-[#f7f8fd] pl-6 pt-2 cursor-pointer hover:border-[#4661e6] border placeholder:text-[0.9375rem] w-full h-[4rem] focus:outline-none" v-model="comment"></textarea>
         <div class="flex items-center justify-between">
           <p class="text-[0.9375rem] text-[#647196]">250 Characters left</p>
-          <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#C75AF6] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Comment</button>
+          <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#C75AF6] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]" @click="postComment">Post Comment</button>
         </div>
       </section>
     </div>
@@ -97,6 +97,8 @@
 
   const route = useRoute()
   const store = useFeedbackStore()
+  const comment = ref('')
+  const isValid = ref<boolean>(false)
 
   onMounted(() => {
       store.initializeData()
@@ -118,5 +120,15 @@
     replyVisibility.value[index] = !replyVisibility.value[index]
   }
 
-
+  const postComment = () => {
+    if( comment.value.trim() !== ''){
+      const productId = parseInt(route.params.id, 10)
+      store.postComment(productId, comment.value);
+      console.log(feedback.value?.comments)
+      comment.value  =  ''
+      isValid.value = false;
+    }else {
+      isValid.value = true;
+    }
+  }
 </script>
