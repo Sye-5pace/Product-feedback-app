@@ -17,7 +17,7 @@ export interface ProductReqList{
     comments: CommentList[]
 }
 
-interface CommentList {
+export interface CommentList {
     id: number;
     content: string;
     user: User;
@@ -30,7 +30,7 @@ interface Reply {
     user: User
 }
 
-interface User {
+export interface User {
     image: string;
     name: string;
     username: string;

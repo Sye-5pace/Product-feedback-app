@@ -80,7 +80,7 @@
       </body>
       <section class="w-full bg-[#fff] rounded-[0.625rem] px-[2.125rem] flex flex-col gap-y-7 py-8">
         <h3>Add Comment</h3>
-        <textarea placeholder="Type your comment here" class="bg-[#f7f8fd] pl-6 pt-2 cursor-pointer hover:border-[#4661e6] border placeholder:text-[0.9375rem] w-full h-[4rem] focus:outline-none"></textarea>
+        <textarea placeholder="Type your comment here" class="bg-[#f7f8fd] pl-6 pt-2 cursor-pointer hover:border-[#4661e6] border placeholder:text-[0.9375rem] w-full h-[4rem] focus:outline-none" v-model="comment"></textarea>
         <div class="flex items-center justify-between">
           <p class="text-[0.9375rem] text-[#647196]">250 Characters left</p>
           <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#C75AF6] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Comment</button>
@@ -117,4 +117,6 @@
     // Toggle the visibility of the reply section at the specified index
     replyVisibility.value[index] = !replyVisibility.value[index]
   }
+
+
 </script>

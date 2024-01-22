@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import type { ProductReqList } from './Interface' 
-// import data from '@/assets/data.json'
-
+import type { ProductReqList, CommentList, User } from './Interface' 
 
 import anneImg     from '@/assets/anne.jpg'
 import elijahImg   from '@/assets/elijah.jpg'
@@ -323,8 +321,13 @@ const data = {
 
 
 export const useFeedbackStore =  defineStore('feedback' ,{
-    state:():{ productData: ProductReqList[] }=>({
-        productData: []
+    state:():{ productData: ProductReqList[]; currentUser: User }=>({
+        productData: [],
+        currentUser: {
+            image: '',
+            name: '',
+            username: '',
+        },
     }),
     getters: {
         suggestions: (state) => {
@@ -343,9 +346,17 @@ export const useFeedbackStore =  defineStore('feedback' ,{
     actions: {
         initializeData(){
             const storedData = localStorage.getItem('productData');
+            const storedCurrentUser = localStorage.getItem('currentUser');
+            
+            this.currentUser = storedCurrentUser ? JSON.parse(storedCurrentUser) : data.currentUser; 
             this.productData = storedData ? JSON.parse(storedData) : data.productRequests;
+
             if(!storedData){
                 localStorage.setItem('productData', JSON.stringify(data.productRequests))
+            }
+
+            if(!storedCurrentUser){
+                localStorage.setItem('currentUser',JSON.stringify(data.currentUser))
             }
         },
         addFeedback(feedback: ProductReqList){
@@ -353,6 +364,22 @@ export const useFeedbackStore =  defineStore('feedback' ,{
             feedback.id = id;
             this.productData.push(feedback)
             localStorage.setItem('productData',JSON.stringify(this.productData))
+        },
+        postComment(productId: number , content: string){
+            const feedbackIndex = this.productData.findIndex((item) => item.id === productId)
+            if(feedbackIndex !== -1){
+                const newComment: CommentList = {
+                    id: this.productData[feedbackIndex].comments.length + 1,
+                    content,
+                    user:{
+                        image: this.currentUser.image,
+                        name: this.currentUser.name,
+                        username: this.currentUser.username
+                    }
+                } 
+                this.productData[feedbackIndex].comments.push(newComment);
+                localStorage.setItem('productData',JSON.stringify(this.productData))
+            }
         }  
     }
 })
