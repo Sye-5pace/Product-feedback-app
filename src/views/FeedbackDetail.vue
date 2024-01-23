@@ -72,8 +72,8 @@
               </div>
             </div>                  
             <div v-if="replyVisibility[index]"  class="pl-[4.5rem] w-full justify-end flex gap-4 transition  mobile:w-[17rem] mobile:pl-[1rem]">
-              <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer"></textarea> 
-              <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Post Reply</button>
+              <textarea class="h-[4rem] bg-[#f7f8fd] w-[28.8125rem] focus:outline-none  pl-6 pt-4 hover:border-[#4661e6] border rounded-[0.3125rem] cursor-pointer" v-model="reply"></textarea> 
+              <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]" @click="() => postReply(index)">Post Reply</button>
             </div>
           </li>
         </ul>
@@ -98,6 +98,7 @@
   const route = useRoute()
   const store = useFeedbackStore()
   const comment = ref('')
+  const reply = ref('')
   const isValid = ref<boolean>(false)
 
   onMounted(() => {
@@ -128,6 +129,26 @@
       comment.value  =  ''
       isValid.value = false;
     }else {
+      isValid.value = true;
+    }
+  }
+
+  const postReply = (commentIndex) => {
+    if (reply.value.trim() !== '') {
+      const productId = parseInt(route.params.id, 10);
+      const feedbackIndex = store.productData.findIndex((item) => item.id === productId);
+
+      if (feedbackIndex !== -1 && commentIndex < store.productData[feedbackIndex].comments.length) {
+        const commentId = store.productData[feedbackIndex].comments[commentIndex].id;
+        store.postReply(productId, commentId, reply.value);
+
+        // Reset the reply and validation state
+        reply.value = '';
+        isValid.value = false;
+      } else {
+        console.error(`Invalid commentIndex or feedback item not found.`);
+      }
+    } else {
       isValid.value = true;
     }
   }

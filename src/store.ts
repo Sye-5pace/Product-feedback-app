@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { ProductReqList, CommentList, User } from './Interface' 
+import type { ProductReqList, CommentList, User,Reply } from './Interface' 
 
 import anneImg     from '@/assets/anne.jpg'
 import elijahImg   from '@/assets/elijah.jpg'
@@ -379,6 +379,33 @@ export const useFeedbackStore =  defineStore('feedback' ,{
                 } 
                 this.productData[feedbackIndex].comments.push(newComment);
                 localStorage.setItem('productData',JSON.stringify(this.productData))
+            }
+        },
+        postReply(productId: number, commentId: number, content: string) {
+            const feedbackIndex = this.productData.findIndex((item) => item.id === productId);
+          
+            if (feedbackIndex !== -1) {
+              const commentIndex = this.productData[feedbackIndex].comments.findIndex((comment) => comment.id === commentId);
+          
+              if (commentIndex !== -1) {
+                const newReply: Reply = {
+                  content,
+                  replyingTo: this.productData[feedbackIndex].comments[commentIndex].user.username,
+                  user: {
+                    image: this.currentUser.image,
+                    name: this.currentUser.name,
+                    username: this.currentUser.username,
+                  },
+                };
+          
+                // Check if replies array exists, if not, initialize it
+                if (!this.productData[feedbackIndex].comments[commentIndex].replies) {
+                  this.productData[feedbackIndex].comments[commentIndex].replies = [];
+                }
+          
+                this.productData[feedbackIndex]?.comments[commentIndex]?.replies?.push(newReply);
+                localStorage.setItem('productData', JSON.stringify(this.productData));
+              }
             }
         }  
     }

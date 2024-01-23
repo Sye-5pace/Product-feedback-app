@@ -24,7 +24,7 @@ export interface CommentList {
     replies?: Reply[]
 }
 
-interface Reply {
+export interface Reply {
     content: string;
     replyingTo: string;
     user: User
