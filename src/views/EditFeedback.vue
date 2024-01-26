@@ -178,7 +178,7 @@
                             <p class="text-[#D73737]" v-if="isValid">Can't be empty</p>
                         </div>
                     </div>
-                    <div class="flex gap-4 justify-between" v-once>
+                    <div class="flex gap-4 justify-between mobile:flex-col-reverse" v-once>
                         <button class="h-[2.75rem] px-6 bg-[#D73737] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="cancelFeedback">Delete</button>
                         <div class="flex justify-between mobile:flex-col-reverse gap-4 mobile:gap-y-4">
                             <button class="h-[2.75rem] px-6 bg-[#3a4374] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="cancelFeedback">cancel</button>
