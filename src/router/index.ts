@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/roadmap', name: 'roadmap', component: RoadmapBoard},
     { path: '/createfeedback', name: 'createfeedback', component: CreateFeedback},
     { path: '/feedbackdetail/:id', name: 'feedback-detail', component: FeedbackDetail, props:true },
-    { path: '/editfeedback', name: 'editfeedback', component: EditFeedback}
+    { path: '/editfeedback/:id', name: 'editfeedback', component: EditFeedback, props:true}
 ]
 
 const router = createRouter({
