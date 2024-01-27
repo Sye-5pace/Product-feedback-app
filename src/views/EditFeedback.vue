@@ -33,8 +33,7 @@
     const stateOptions = (option: string) =>{ 
         status.value = option
     }
-
-          
+      
 
     
     const deleteFeedback = () => {
