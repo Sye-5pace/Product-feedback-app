@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { RouterLink } from 'vue-router'
+    import { RouterLink,useRoute,useRouter } from 'vue-router'
     import { ref,computed,onMounted } from 'vue';
     import navDown from '../assets/icon-arrow-down.svg'
     import navUp from '../assets/icon-arrow-up.svg'
@@ -8,14 +8,25 @@
 
 
     const store = useFeedbackStore()
+    const router = useRouter()
+    const route = useRoute()
 
-    const category = ref<string>('Feature')
-    const status = ref<string>('planned')
+    onMounted(() => {
+        store.initializeData()
+    })
+
+    const suggestions = computed(() => store.suggestions ) 
+    const feedback = computed(() => { 
+        return suggestions.value.find((item) => String(item.id) === String(route.params.id))
+    })
+
+    console.log(feedback.value.category, feedback.value.status)
+
+    const category = ref<string | undefined >(feedback.value?.category)
+    const status = ref<string | undefined >(feedback.value?.status)
     const isValid = ref<boolean>(false)
-    const feedbackTrack = ref<boolean>(false)
     const isCateVisible = ref<boolean>(false)
     const isStateVisible = ref<boolean>(false)
-    const id = ref( store.productData.length + 1)
     const cateOptions = (option: string) =>{ 
         category.value = option
     }
@@ -23,64 +34,37 @@
         status.value = option
     }
 
-    onMounted(() => {
-        store.initializeData()
-    })
+          
 
-    //making feedbackform reactive
-    const categoryInFeedback = computed(() => category.value);
-    const statusInFeedback = computed(() => status.value);
-
-    const feedback = ref({
-        title: '',
-        category: categoryInFeedback,
-        upvotes: 0,
-        status: statusInFeedback,
-        description: '',
-        comments:[],
-
-    })
-
-    console.log('feedbacks:', JSON.stringify(store.productData));
     
-    const createFeedback = () => {
-        if(feedback.value.description){
-            store.addFeedback({
-                id: id.value,
-                title: feedback.value.title,
-                category: feedback.value.category,
-                upvotes: feedback.value.upvotes,
-                status: feedback.value.status,
-                description: feedback.value.description,
-                comments: feedback.value.comments,
-            })
-            isValid.value = false;
-            feedbackTrack.value = true
-            console.log('feedback added:', JSON.stringify(store.productData));
-            feedback.value = {
-            title: '',
-            upvotes: 0,
-            category: category.value,
-            status: status.value,
-            description: '',
-            comments:[],
-        }
-        }else{
-            isValid.value = true;
-        }
-    }        
-    
+    const deleteFeedback = () => {
+        const feedbackId = parseInt(String(route.params.id), 10);
+        store.deleteFeedback(feedbackId) 
+        router.push('/')
+    }
+
+    const updateFeedback = () => {
+        const feedbackId = parseInt(String(route.params.id), 10);
+        store.updateFeedback(feedbackId, {
+            title: feedback.value?.title,
+            category: feedback.value?.category,
+            status: feedback.value?.status,
+            description: feedback.value?.description
+        })
+        router.push({ name: 'feedback-detail', params: { id: feedbackId} })
+    }
 
     const cancelFeedback = () => {
-        feedback.value = {
-            title: '',
-            upvotes: 0,
-            category: category.value,
-            status: status.value,
-            description: '',
-            comments:[],
+        if (feedback.value) {
+            feedback.value = {
+                title: '',
+                category: category.value,
+                status: status.value,
+                description: '',
+            }
         }
     }
+    
 </script>
 
 
@@ -88,20 +72,19 @@
 <template>
     <section class="flex justify-center items-center desktop:w-full tablet:w-full mobile:w-full">
         <div class="flex flex-col gap-y-[0.85rem] mobile:mt-[2.125rem] mobile:mb-[4.8125rem] mobile:mx-auto">
-            
             <header class="flex gap-2 items-center" v-once>
                 <img src="../assets/icon-arrow-left.svg" alt="back-nav" class="w-2 "/>
-                <router-link :to="{ name: 'feedback-detail', params: { id: feedback.id}}" class="text-[#647196] font-bold text-[0.875rem]" >Go Back</router-link>
+                <router-link :to="{ name: 'feedback-detail', params: { id: feedback?.id}}" class="text-[#647196] font-bold text-[0.875rem]" >Go Back</router-link>
             </header>
             <main class=" desktop:w-[33.75rem] tablet:w-[33.75rem] mobile:w-[20.4375rem]">
                 <img src="../assets/icon-edit-feedback.svg" alt="" class="relative -bottom-[1.6rem] left-[3.5rem] mobile:w-[2.5rem] mobile:left-[1.7rem]"/>
                 <div class="px-[2.625rem] mobile:px-6 py-[2.8125rem] bg-[#fff] w-full rounded-[0.625rem] h-full flex flex-col gap-y-[2.5rem] mobile:gap-y-10">
-                    <h2 class="text-[#3a4374] text-[1.5rem] font-bold mobile:text-[1.125rem]">Editing ''</h2>
-                    <div class="flex flex-col gap-y-6">
+                    <h2 class="text-[#3a4374] text-[1.5rem] font-bold mobile:text-[1.125rem]">Editing '{{ feedback?.title }}'</h2>
+                    <div class="flex flex-col gap-y-6" v-if="feedback">
                         <div class="flex flex-col gap-y-4">
                             <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Title</h4>
                             <p class="text-[#647196] text-[0.875rem] ">Add a short, descriptive headline</p>
-                            <input type="text" class="rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-2 hover:border hover:border-[#4661e6]  w-full" :class="isValid ? 'border border-[#D73737]' : ''" v-model="feedback.title">
+                            <input type="text" class="rounded-[0.3125rem] bg-[#f7f8fd] h-[3rem] focus:outline-none px-6 hover:border hover:border-[#4661e6]  w-full text-[#3a4374] text-[0.9375rem]" :class="isValid ? 'border border-[#D73737]' : ''" v-model="feedback.title">
                         </div>    
                         <div class="flex flex-col gap-y-4" id="choose-category">
                             <div>
@@ -138,10 +121,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-y-4" id="choose-category">
+                        <div class="flex flex-col gap-y-4" id="choose-status">
                             <div>
-                                <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Status</h4>
-                                <p class="text-[#647196] text-[0.875rem] ">Choose a state for your feedback</p>
+                                <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Update Status</h4>
+                                <p class="text-[#647196] text-[0.875rem] ">Change a feature state </p>
                             </div>
                             <div class="flex flex-col gap-y-4">
                                 <div class="w-[28.5rem] h-[3rem] mobile:w-full bg-[#f7f8fd] flex items-center hover:border hover:border-[#4661e6] rounded-[0.3125rem] px-6 cursor-pointer justify-between" @click=" isStateVisible = !isStateVisible">
@@ -174,15 +157,15 @@
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Detail</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Include any specific comments on what should be improved, added, etc.</p>
                             </div>
-                            <textarea v-model="feedback.description" :class="isValid ? 'border border-[#D73737]' : ''"   class="h-[6rem] mobile:h-[7.5rem] rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2" rows="4" ></textarea>
+                            <textarea v-model="feedback.description" :class="isValid ? 'border border-[#D73737]' : ''"   class="h-[6rem] mobile:h-[7.5rem] rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-6 py-2 text-[#3a4374] text-[0.9375rem]" rows="4" ></textarea>
                             <p class="text-[#D73737]" v-if="isValid">Can't be empty</p>
                         </div>
                     </div>
                     <div class="flex gap-4 justify-between mobile:flex-col-reverse" v-once>
-                        <button class="h-[2.75rem] px-6 bg-[#D73737] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="cancelFeedback">Delete</button>
+                        <button class="h-[2.75rem] px-6 bg-[#D73737] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="deleteFeedback">Delete</button>
                         <div class="flex justify-between mobile:flex-col-reverse gap-4 mobile:gap-y-4">
                             <button class="h-[2.75rem] px-6 bg-[#3a4374] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="cancelFeedback">cancel</button>
-                            <button class="h-[2.75rem] px-6 bg-[#AD1FEA] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="createFeedback">Save changes</button>
+                            <button class="h-[2.75rem] px-6 bg-[#AD1FEA] rounded-[0.625rem] flex items-center justify-center text-[#f2f4fe] font-bold" @click="updateFeedback">Save changes</button>
                         </div>
                     </div>
                 </div>

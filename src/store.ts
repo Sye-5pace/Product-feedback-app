@@ -365,6 +365,14 @@ export const useFeedbackStore =  defineStore('feedback' ,{
             this.productData.push(feedback)
             localStorage.setItem('productData',JSON.stringify(this.productData))
         },
+        deleteFeedback(id: number){
+            const feedbackIndex = this.productData.findIndex((item) => item.id === id)
+
+            if (feedbackIndex !== -1){
+                this.productData.splice(feedbackIndex,1)
+                localStorage.setItem('productData', JSON.stringify(this.productData))
+            }
+        },
         postComment(productId: number , content: string){
             const feedbackIndex = this.productData.findIndex((item) => item.id === productId)
             if(feedbackIndex !== -1){
@@ -409,6 +417,7 @@ export const useFeedbackStore =  defineStore('feedback' ,{
               }
             }
         }  
+
     }
 })
 

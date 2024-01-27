@@ -7,7 +7,7 @@
                 <img src="../assets/icon-arrow-left.svg" alt="back-nav" class="w-2 h-2"/>
                 <router-link class="text-[#647196] font-bold text-[0.875rem] hover:underline cursor-pointer" to="/">Go Back</router-link>
             </div>
-            <router-link :to="{ name: 'editfeedback', params: { id: feedback.id}}" class="text-[#f2f4fe] rounded-[0.625rem] bg-[#4661E6] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Edit Feedback</router-link>
+            <router-link :to="{ name: 'editfeedback', params: { id: feedback?.id}}" class="text-[#f2f4fe] rounded-[0.625rem] bg-[#4661E6] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Edit Feedback</router-link>
           </nav>
           <section class="w-full bg-[#fff]" v-if="feedback">
             <div class="flex justify-between items-center  w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] mobile:w-full mobile:h-full" >
