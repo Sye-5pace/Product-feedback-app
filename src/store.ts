@@ -373,6 +373,18 @@ export const useFeedbackStore =  defineStore('feedback' ,{
                 localStorage.setItem('productData', JSON.stringify(this.productData))
             }
         },
+        updateFeedback(id: number, updatedFeedback: ProductReqList){
+            const feedbackIndex = this.productData.findIndex((item) => item.id === id)
+
+            if(feedbackIndex !== -1){
+                this.productData[feedbackIndex].title = updatedFeedback.title;
+                this.productData[feedbackIndex].category = updatedFeedback.category;
+                this.productData[feedbackIndex].status = updatedFeedback.status;
+                this.productData[feedbackIndex].description = updatedFeedback.description;
+
+                localStorage.setItem('productData',JSON.stringify(this.productData))
+            }
+        },
         postComment(productId: number , content: string){
             const feedbackIndex = this.productData.findIndex((item) => item.id === productId)
             if(feedbackIndex !== -1){

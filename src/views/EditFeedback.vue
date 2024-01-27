@@ -53,21 +53,20 @@
         })
         router.push({ name: 'feedback-detail', params: { id: feedbackId} })
     }
-
+    
     const cancelFeedback = () => {
+        const feedbackId = parseInt(String(route.params.id), 10);
         if (feedback.value) {
-            feedback.value = {
-                title: '',
-                category: category.value,
-                status: status.value,
-                description: '',
-            }
+            category.value = feedback.value.category;
+            status.value = feedback.value.status;
+            router.push({ name: 'feedback-detail', params: { id: feedbackId} })
+            // feedback.value.title = feedback.value.title
+            // feedback.value.description = feedback.value.description
+            
         }
     }
     
 </script>
-
-
 
 <template>
     <section class="flex justify-center items-center desktop:w-full tablet:w-full mobile:w-full">
@@ -97,7 +96,7 @@
                                     <img :src="navUp" alt="arrow-up"  v-if="isCateVisible"/>
                                     <img :src="navDown" alt="arrow-down"  v-else />
                                 </div>
-                                <div class="bg-[#fff] absolute top-[34.7rem] w-[28.5rem] mobile:w-full  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] h-[15rem] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isCateVisible">
+                                <div class="bg-[#fff] absolute top-[33.7rem] w-[28.5rem] mobile:w-full  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] h-[15rem] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isCateVisible">
                                     <div class="flex px-6 items-center justify-between border-b  cursor-pointer" @click="cateOptions('Feature')">
                                         <h3 class="text-[1rem] text-[#647196]">Feature</h3>
                                         <img :src="tick" alt="tick" :class=" category === 'Feature' ? 'block': 'hidden' "/>
@@ -132,7 +131,7 @@
                                     <img :src="navUp" alt="arrow-up"  v-if="isStateVisible"/>
                                     <img :src="navDown" alt="arrow-down"  v-else />
                                 </div>
-                                <div class="bg-[#fff] absolute top-[40rem] w-[28.5rem]  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isStateVisible">
+                                <div class="bg-[#fff] absolute top-[42rem] w-[28.5rem]  shadow-[0_10px_40px_-7px_rgba(55,63,104,0.35)] children:h-[2.9375rem] rounded-[0.625rem] " v-if="isStateVisible">
                                     <div class="flex px-6 items-center justify-between border-b cursor-pointer" @click="stateOptions('Suggestions')">
                                         <h3 class="text-[1rem] text-[#647196]">Suggestions</h3>
                                         <img :src="tick" alt="tick" :class=" status === 'Suggestions' ? 'block': 'hidden' "/>
