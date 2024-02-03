@@ -1,3 +1,36 @@
+<script setup lang="ts">
+  import { RouterLink } from 'vue-router';
+  import { defineProps,ref } from 'vue';
+  import type { PropType } from 'vue';
+  import type { ProductReqList } from '../Interface'
+  import EmptySugxn from '../assets/empty-suggestion.svg'
+  import navDown from '../assets/white-nav-down.svg'
+  import navUp from '../assets/white-nav-up.svg'
+  import tick from '../assets/option-tick.svg'
+   
+  
+  // eslint-disable-next-line
+  const { selectedSuggestions,voteOptions } = defineProps({
+    selectedSuggestions: Array as PropType<ProductReqList[]>,
+    voteOptions: String,
+    optionsUpdater: Function
+  })
+  // destructuring props from SuggestionsBoard.vue
+
+  //State/primitive variables : refs
+  const optionToggle = ref(false)
+  const isHovered = ref(Array(selectedSuggestions?.length).fill(false))
+  const onMouseOver = (index) => {
+    return isHovered.value[index] = true;
+  }
+  const onMouseOut = (index) => {
+    return isHovered.value[index] = false;
+  }
+</script>
+
+
+
+
 <template>
   <section class="w-full  flex  flex-col gap-y-6 ">
       <header class="bg-[#373f68] rounded-[0.625rem] h-[4.5rem] w-full flex items-center  pl-6 pr-4 justify-between mobile:rounded-none">
@@ -6,6 +39,7 @@
             <img src="../assets/bulb-2.png" class=""/>
             <span class="font-bold text-[1.125rem] text-[#fff]">{{ selectedSuggestions?.length }} Suggestions</span>
           </div>
+          <!-- filter: vote options block -->
           <div class="gap-1 text-[#F2F4FE] text-[0.875rem] mobile:text-[0.8125rem] flex items-center cursor-pointer">
             <h5 class="font-normal">Sort by : </h5>
             <div @click="optionToggle = !optionToggle" class="flex gap-2 items-center">
@@ -13,7 +47,7 @@
               <img :src="navUp" alt="nav-toggle" class="py-2" v-if="optionToggle"/>
               <img :src="navDown" alt="nav-toggle" class="py-2" v-else/>
             </div>
-            <div class="absolute  border top-[9.2375rem] justify-center flex flex-col  bg-white rounded-[0.625rem] children:h-[2.9375rem] w-[15.9375rem] h-[12.0625rem] shadow-lg" v-if="optionToggle">
+            <div class="absolute top-[8.2375rem] justify-center flex flex-col  bg-white rounded-[0.625rem] children:h-[2.9375rem] w-[15.9375rem] h-[12.0625rem] shadow-lg" v-if="optionToggle">
               <div @click="optionsUpdater('Most Upvotes')"  class=" border-b px-6 py-[0.75rem] flex justify-between"> 
                 <h3 class="text-[#647196] text-[1rem] hover:text-[#ad1fea]" >Most Upvotes</h3>
                 <img :src="tick" alt="option-tick" :class="voteOptions === 'Most Upvotes' ? 'block':'hidden'"/>
@@ -35,6 +69,7 @@
         </div>
         <router-link  to="/createfeedback" class=" rounded-[0.625rem] h-[2.75rem] mobile:h-[2.5rem] py-3 mobile:py-[0.625rem] mobile:px-4 px-6 bg-[#AD1FEA] text-[#f2f4fe] flex cursor-pointer"  v-once>+ Add Feedback</router-link>
       </header>
+       <!-- Suggestions view -->
       <main class="flex flex-col gap-y-[1.25rem] mobile:mx-6"  v-if="selectedSuggestions?.length">
         <div  @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] mobile:w-full mobile:h-full" v-for="(item,index) in selectedSuggestions " :key="index" >
           <div class="flex gap-[2.5rem] mobile:flex-col-reverse mobile:gap-y-4">
@@ -56,6 +91,7 @@
           </div>
         </div>
       </main>
+       <!-- Empty suggestions view  -->
       <section class="flex flex-col justify-center items-center gap-y-[2rem] bg-[#fff] rounded-[0.625rem] desktop:h-full mobile:mx-6 mobile:h-[28.75rem] tablet:h-[37.5rem]" v-else>
         <img :src="EmptySugxn" alt="empty-suggestion" class="w-[8.1025rem] h-[8.55rem]"/>
         <div class="flex flex-col gap-y-[3rem] w-[25.625rem] h-[11.8125rem] justify-center">
@@ -71,34 +107,4 @@
       </section>
   </section>
 </template>
-
-<script setup lang="ts">
-  import { RouterLink } from 'vue-router';
-  import { defineProps,ref } from 'vue';
-  import type { PropType } from 'vue';
-  import type { ProductReqList } from '../Interface'
-  import EmptySugxn from '../assets/empty-suggestion.svg'
-  import navDown from '../assets/white-nav-down.svg'
-  import navUp from '../assets/white-nav-up.svg'
-  import tick from '../assets/option-tick.svg'
-   
-  const optionToggle = ref(false)
-  
-  // eslint-disable-next-line
-  const { selectedSuggestions,voteOptions } = defineProps({
-    selectedSuggestions: Array as PropType<ProductReqList[]>,
-    voteOptions: String,
-    optionsUpdater: Function
-  })
-
-  const isHovered = ref(Array(selectedSuggestions?.length).fill(false))
-    
-  const onMouseOver = (index) => {
-    return isHovered.value[index] = true;
-  }
-  
-  const onMouseOut = (index) => {
-    return isHovered.value[index] = false;
-  }
-</script>
 

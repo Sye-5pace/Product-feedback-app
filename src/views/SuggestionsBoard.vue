@@ -15,13 +15,24 @@
   const selectedCategory = ref('all') ;
   const voteOptions = ref('Most Upvotes')
 
+  //Initialize store into the component
   onMounted(() => {
     store.initializeData()
   })
 
+  //initialize suggestions into the component
   const suggestions = computed(() => store.suggestions) 
-  console.log(suggestions.value)
-
+  
+  //Filters: Category,Options
+  const selectCategory = (category: string) => {
+    selectedCategory.value = category
+  }
+  const optionsUpdater = (option: string) => {
+    voteOptions.value = option
+  }
+  
+  
+  //Filters' Algorithm based on category and/or options
   const selectedSuggestions = computed(() => {
     if (selectedCategory.value === 'all') {
     return suggestions.value.slice().sort((a, b) => {
@@ -57,12 +68,6 @@
   }
 })
   
-  const selectCategory = (category: string) => {
-    selectedCategory.value = category
-  }
-
-  const optionsUpdater = (option: string) => {
-    voteOptions.value = option
-  }  
+  
 </script>
   
