@@ -71,7 +71,7 @@
       </header>
        <!-- Suggestions view -->
       <main class="flex flex-col gap-y-[1.25rem] mobile:mx-6"  v-if="selectedSuggestions?.length">
-        <div  @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] mobile:w-full mobile:h-full" v-for="(item,index) in selectedSuggestions " :key="index" >
+        <div  @mouseover="onMouseOver(index)" @mouseout="onMouseOut(index)"  class="flex justify-between items-center cursor-pointer w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] mobile:w-full mobile:h-full " v-for="(item,index) in selectedSuggestions " :key="index" >
           <div class="flex gap-[2.5rem] mobile:flex-col-reverse mobile:gap-y-4">
             <div class="w-[2.5rem] h-[3.3125rem] mobile:w-[4.3125rem] mobile:flex-row mobile:justify-center mobile:gap-[0.625rem] mobile:items-center mobile:h-[2rem] flex flex-col justify-center transition hover:bg-[#CFD7FF] items-center gap-y-2  rounded-[0.625rem] bg-[#f2f4fe] ">
               <img src="../assets/icon-arrow-up.svg" alt="up-nav" class="w-2"/>
@@ -79,7 +79,7 @@
             </div>
             <div class="flex flex-col gap-y-[1.0625rem]">
               <routerLink :to="{ name: 'feedback-detail', params: { id: item.id}}" class="flex flex-col gap-y-1">
-                <h3 class="text-[#3a4374] text-[1.25rem] font-bold" :class="isHovered[index] ? 'text-[#4661e6]' : ''" >{{ item.title }}</h3>
+                <h3 :class="{'text-[#4661e6]' :  isHovered[index] , 'text-[#3a4374] text-[1.25rem] font-bold' : true}">{{ item.title }}</h3>
                 <h3 class="text-[#647196] font-normal text-[1rem] ">{{ item.description }}</h3>
               </routerLink>
               <span class="w-[6.9375rem] h-[1.875rem] rounded-[0.625rem] bg-[#f2f4ff] text-[#4661e6] font-semibold text-[0.8125rem] flex justify-center items-center px-4 py-[0.6875rem]">{{ item.category }}</span>
