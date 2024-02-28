@@ -33,6 +33,7 @@
   
   
   //Filters' Algorithm based on category and/or options
+  //Important Feat: #1
   const selectedSuggestions = computed(() => {
     if (selectedCategory.value === 'all') {
     return suggestions.value.slice().sort((a, b) => {
@@ -48,7 +49,7 @@
         return 0; 
       }
     });
-  } else {
+    } else {
     return suggestions.value
       .filter((item) => item.category === selectedCategory.value)
       .slice()
@@ -65,9 +66,8 @@
           return 0; // Default case
         }
       });
-  }
-})
-  
-  
+    }
+  })
+   
 </script>
   

@@ -35,6 +35,7 @@
     </header>
     <main class="h-full grid grid-cols-3 gap-x-[1.575rem] tablet:gap-x-[0.625rem] mobile:flex mobile:flex-col">
        <!-- Desktop & Tablet UI -->
+       <!-- Planned status content -->
       <section class="flex flex-col gap-y-8 mobile:hidden">
         <div class="flex flex-col gap-y-1 tablet:text-[0.875rem]">
           <h3 class="font-bold text-[1.125rem] text-[#3a4375]">Planned ({{ planned?.length }})</h3>
@@ -63,6 +64,7 @@
           </div>
         </div>
       </section>
+      <!-- In-progress status content -->
       <section class="flex flex-col gap-y-8 mobile:hidden">
         <div class="flex flex-col gap-y-1 tablet:text-[0.875rem">
           <h3 class="font-bold text-[1.125rem] text-[#3a4375]">In-Progress ({{ progress?.length }})</h3>
@@ -91,6 +93,7 @@
           </div>
         </div>
       </section>
+      <!-- Live status content -->
       <section class="flex flex-col gap-y-8 mobile:hidden">
         <div class="flex flex-col gap-y-1 tablet:text-[0.875rem">
           <h3 class="font-bold text-[1.125rem] text-[#3a4375]">Live ({{ live?.length  }})</h3>
@@ -132,8 +135,8 @@
           <div class="py-[1.03125rem] w-[7.8125rem] h-full" @click="navSelect('live')"  :class="navClick === 'live' ? 'border-b-4 border-[#62bcfa]': ''">
             <h3 class="font-bold text-[0.8125rem] text-[#3a4374] text-center text-opacity-40" :class="navClick === 'live' ? 'text-opacity-100': ''">Live ({{ live?.length }})</h3>
           </div>
-          
         </nav>
+        <!-- Planned status content -->
         <body class="flex flex-col gap-y-8 w-[20.4375rem] mx-auto" v-if="navClick === 'planned'">
           <div class="flex flex-col gap-y-1 tablet:text-[0.875rem]">
             <h3 class="font-bold text-[1.125rem] text-[#3a4375]">Planned ({{ planned?.length }})</h3>
@@ -162,6 +165,7 @@
             </div>
           </div>
         </body>
+        <!-- In-progress status content -->
         <body class="flex flex-col gap-y-8 w-[20.4375rem] mx-auto" v-if="navClick === 'progress'">
           <div class="flex flex-col gap-y-1 tablet:text-[0.875rem]">
             <h3 class="font-bold text-[1.125rem] text-[#3a4375]">In-Progress ({{ progress?.length }})</h3>
@@ -190,6 +194,7 @@
             </div>
           </div>
         </body>
+        <!-- Live status content -->
         <body class="flex flex-col gap-y-8 w-[20.4375rem] mx-auto" v-if="navClick === 'live'">
           <div class="flex flex-col gap-y-1 tablet:text-[0.875rem]">
             <h3 class="font-bold text-[1.125rem] text-[#3a4375]">Live ({{ live?.length }})</h3>
@@ -219,8 +224,6 @@
           </div>
         </body>
       </section>
-      
-
     </main>  
   </section>
 </template>

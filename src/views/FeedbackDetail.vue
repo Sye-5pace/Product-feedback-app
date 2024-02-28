@@ -9,7 +9,7 @@
             </div>
             <router-link :to="{ name: 'editfeedback', params: { id: feedback?.id}}" class="text-[#f2f4fe] rounded-[0.625rem] bg-[#4661E6] hover:bg-[#7C91F9] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]">Edit Feedback</router-link>
           </nav>
-          <section class="w-full bg-[#fff]" v-if="feedback">
+          <section class="w-full bg-[#fff] rounded-[0.625rem]" v-if="feedback">
             <div class="flex justify-between items-center  w-full h-[9.4375rem] bg-[#fff] rounded-[0.625rem] px-8 py-[1.75rem] mobile:w-full mobile:h-full" >
               <div class="flex gap-[2.5rem] mobile:flex-col-reverse mobile:gap-y-4">
                 <div class="w-[2.5rem] h-[3.3125rem] mobile:w-[4.3125rem] mobile:flex-row mobile:justify-center mobile:gap-[0.625rem] mobile:items-center mobile:h-[2rem] flex flex-col justify-center transition hover:bg-[#CFD7FF] items-center gap-y-2  rounded-[0.625rem] bg-[#f2f4fe] ">
@@ -31,7 +31,7 @@
             </div>
           </section>
       </header>
-      <body class="bg-[#fff] px-[2.125rem] pt-6 w-full flex flex-col gap-y-7" v-if="feedback && feedback.comments">
+      <body class="bg-[#fff] px-[2.125rem] pt-6 w-full flex flex-col gap-y-7 rounded-[0.625rem]" v-if="feedback && feedback.comments">
         <h3 class="font-bold text-[#3a4374] text-[1.125rem]">{{ feedback.comments.length }} Comments</h3>
         <ul class="flex flex-col gap-y-8">
           <li v-for="(comment,index) in feedback.comments" :key="index"  class="flex flex-col gap-y-8 pb-8 border-b border-opacity-[0.25] border-[#8c92b3] w-full ">
@@ -49,6 +49,7 @@
               </div>
               <p class="text-[#647196] text-[0.9375rem] ml-[4.5rem] mobile:ml-0">{{ comment.content }}</p>
               
+              <!-- Feedback comment's replies -->
               <div v-if="comment.replies" >
                 <ul class="flex flex-col gap-y-8 ml-[4.8125rem] mobile:ml-0">
                   <li class="flex  flex-col w-full gap-8 " v-for="(reply,index) in comment.replies" :key="index">
@@ -102,16 +103,14 @@
   const isValid = ref<boolean>(false)
 
   onMounted(() => {
-      store.initializeData()
+    store.initializeData()
   })
-
   
   const suggestions = computed(() => store.suggestions )
   
   const feedback = computed(() => { 
     return suggestions.value.find((item) => String(item.id) === String(route.params.id))
   })
-
  
   // Use an array to track the visibility of reply sections
   const replyVisibility = ref(Array(feedback.value?.comments.length).fill(false))

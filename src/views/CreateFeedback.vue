@@ -6,9 +6,9 @@
     import tick from '../assets/option-tick.svg'
     import { useFeedbackStore } from '../store'
 
-
     const store = useFeedbackStore()
 
+    //Primtive variables/values: refs
     const category = ref<string>('Feature')
     const status = ref<string>('planned')
     const isValid = ref<boolean>(false)
@@ -23,6 +23,7 @@
         status.value = option
     }
 
+    // initialize store into the component
     onMounted(() => {
         store.initializeData()
     })
@@ -30,8 +31,6 @@
     //making feedbackform reactive
     const categoryInFeedback = computed(() => category.value);
     const statusInFeedback = computed(() => status.value);
-
-    
     const feedback = ref({
         title: '',
         category: categoryInFeedback,
@@ -39,11 +38,9 @@
         status: statusInFeedback,
         description: '',
         comments:[],
-
     })
 
-    console.log('feedbacks:', JSON.stringify(store.productData));
-    
+    //add Feedback feature
     const createFeedback = () => {
         if(feedback.value.description){
             store.addFeedback({
@@ -57,20 +54,18 @@
             })
             isValid.value = false;
             feedbackTrack.value = true
-            console.log('feedback added:', JSON.stringify(store.productData));
             feedback.value = {
-            title: '',
-            upvotes: 0,
-            category: category.value,
-            status: status.value,
-            description: '',
-            comments:[],
-        }
+                title: '',
+                upvotes: 0,
+                category: category.value,
+                status: status.value,
+                description: '',
+                comments:[],
+            }
         }else{
             isValid.value = true;
         }
     }        
-    
 
     const cancelFeedback = () => {
         feedback.value = {
@@ -139,7 +134,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-y-4" id="choose-category">
+                        <div class="flex flex-col gap-y-4" id="choose-status">
                             <div>
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Status</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Choose a state for your feedback</p>
@@ -175,7 +170,7 @@
                                 <h4 class="text-[#3a4374] text-[0.875rem] font-bold">Feedback Detail</h4>
                                 <p class="text-[#647196] text-[0.875rem] ">Include any specific comments on what should be improved, added, etc.</p>
                             </div>
-                            <textarea v-model="feedback.description" :class="isValid ? 'border border-[#D73737]' : ''"   class="h-[6rem] mobile:h-[7.5rem] rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2" rows="4" ></textarea>
+                            <textarea v-model="feedback.description" :class="{'border border-[#D73737]' : isValid , 'h-[6rem] mobile:h-[7.5rem] rounded-[0.3125rem] bg-[#f7f8fd] focus:outline-none px-2 py-2' : true}"    rows="4" ></textarea>
                             <p class="text-[#D73737]" v-if="isValid">Can't be empty</p>
                         </div>
                     </div>

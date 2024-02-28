@@ -319,7 +319,6 @@ const data = {
 }
 
 
-
 export const useFeedbackStore =  defineStore('feedback' ,{
     state:():{ productData: ProductReqList[]; currentUser: User }=>({
         productData: [],
@@ -400,8 +399,7 @@ export const useFeedbackStore =  defineStore('feedback' ,{
                 this.productData[feedbackIndex].comments.push(newComment);
                 localStorage.setItem('productData',JSON.stringify(this.productData))
             }
-        },
-        
+        },      
         postReply(productId: number, commentId: number, content: string) {
             const feedbackIndex = this.productData.findIndex((item) => item.id === productId);
           
@@ -429,7 +427,6 @@ export const useFeedbackStore =  defineStore('feedback' ,{
               }
             }
         }  
-
     }
 })
 

@@ -28,9 +28,6 @@
   }
 </script>
 
-
-
-
 <template>
   <section class="w-full  flex  flex-col gap-y-6 ">
       <header class="bg-[#373f68] rounded-[0.625rem] h-[4.5rem] w-full flex items-center  pl-6 pr-4 justify-between mobile:rounded-none">
