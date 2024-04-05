@@ -7,6 +7,7 @@ import router from './router/index'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import "./registerServiceWorker"
 
 const app = createApp (App) 
 const pinia = createPinia()
