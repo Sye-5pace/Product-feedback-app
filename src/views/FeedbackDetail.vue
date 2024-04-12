@@ -1,6 +1,6 @@
 <template> 
   <main class="w-full h-full flex  justify-center ">
-    <div class=" desktop:w-[45.625rem] mobile:mx-6 mobile:mt-6 mobile:mb-[5.5rem] tablet:w-full flex flex-col gap-y-6 desktop:mb-[8.5625rem] tablet:mb-[7.5rem] ">
+    <div class=" desktop:w-[45.625rem] mobile:mx-6 mobile:mt-6 mobile:mb-[5.5rem] tablet:w-full flex flex-col gap-y-6 desktop:mb-[8.5625rem] tablet:mb-[7.5rem] h-full">
       <header class="flex flex-col gap-y-6 ">
           <nav class="flex justify-between items-center">
             <div class="flex gap-2 items-center">
@@ -80,10 +80,13 @@
         </ul>
       </body>
       <section class="w-full bg-[#fff] rounded-[0.625rem] px-[2.125rem] flex flex-col gap-y-7 py-8">
-        <h3>Add Comment</h3>
-        <textarea placeholder="Type your comment here" class="bg-[#f7f8fd] pl-6 pt-2 cursor-pointer hover:border-[#4661e6] border placeholder:text-[0.9375rem] w-full h-[4rem] focus:outline-none" v-model="comment"></textarea>
+        <div class="flex flex-col gap-y-3">
+          <h3>Add Comment</h3>
+          <textarea placeholder="Type your comment here" class="bg-[#f7f8fd] pl-6 pt-2 cursor-pointer hover:border-[#4661e6] border placeholder:text-[0.9375rem] w-full h-[4rem] focus:outline-none" v-model="comment" ></textarea>
+          <p v-if="isValid" class="text-[#D73737]">invalid comment</p>
+        </div>
         <div class="flex items-center justify-between">
-          <p class="text-[0.9375rem] text-[#647196]">250 Characters left</p>
+          <p class="text-[0.9375rem] text-[#647196]">{{ charCount }} Characters left</p>
           <button class="text-[#f2f4fe] rounded-[0.625rem] bg-[#AD1FEA] hover:bg-[#C75AF6] font-bold text-[0.875rem] flex items-center justify-center w-[8.875rem] h-[2.75rem]" @click="postComment">Post Comment</button>
         </div>
       </section>
@@ -101,15 +104,21 @@
   const comment = ref('')
   const reply = ref('')
   const isValid = ref<boolean>(false)
+  const count = ref<number>(250)
 
   onMounted(() => {
     store.initializeData()
+    count.value = 250 - comment.value.length
   })
   
   const suggestions = computed(() => store.suggestions )
   
   const feedback = computed(() => { 
     return suggestions.value.find((item) => String(item.id) === String(route.params.id))
+  })
+
+  const charCount = computed(() => {
+    return  250 - comment.value.length
   })
  
   // Use an array to track the visibility of reply sections
@@ -121,10 +130,9 @@
   }
 
   const postComment = () => {
-    if( comment.value.trim() !== ''){
+    if( comment.value.trim() !== '' || charCount.value <= 0 ){
       const productId = parseInt(route.params.id, 10)
       store.postComment(productId, comment.value);
-      console.log(feedback.value?.comments)
       comment.value  =  ''
       isValid.value = false;
     }else {

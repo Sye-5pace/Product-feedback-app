@@ -20,7 +20,6 @@
         return suggestions.value.find((item) => String(item.id) === String(route.params.id))
     })
 
-    console.log(feedback.value.category, feedback.value.status)
 
     const category = ref<string | undefined >(feedback.value?.category)
     const status = ref<string | undefined >(feedback.value?.status)
@@ -58,10 +57,7 @@
         if (feedback.value) {
             category.value = feedback.value.category;
             status.value = feedback.value.status;
-            router.push({ name: 'feedback-detail', params: { id: feedbackId} })
-            // feedback.value.title = feedback.value.title
-            // feedback.value.description = feedback.value.description
-            
+            router.push({ name: 'feedback-detail', params: { id: feedbackId} })                      
         }
     }
     
